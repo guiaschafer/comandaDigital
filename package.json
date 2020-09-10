@@ -6,7 +6,9 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "build": "expo build:web"
+    "build": "expo build:web",
+    "install expo": "install -g expo-cli"
+
   },
   "dependencies": {
     "@react-native-community/masked-view": "0.1.10",
@@ -30,7 +32,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
-    "babel-preset-expo": "~8.1.0"
+    "babel-preset-expo": "~8.1.0",
+    "expo-cli": "^3.27.4"
   },
   "private": true
 }
