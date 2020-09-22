@@ -6,37 +6,28 @@ import MenuButton from '../../components/MenuButton/MenuButton';
 
 export default class DrawerContainer extends React.Component {
   render() {
-    const { navigation } = this.props;
+    const { signOut } = useContext(AuthContext);
+   
     return (
-      <View style={styles.content}>
-        <View style={styles.container}>
-          <MenuButton
-            title="HOME"
-            source={require('../../../assets/menu/home.png')}
-            onPress={() => {
-              navigation.navigate('Home');
-              navigation.closeDrawer();
-            }}
+      <Drawer.Navigator>
+          <Drawer.Screen
+              name="Home Screen"
+              component={HomeScreen}
+              initialParams={{
+                  id: 111,
+                  SignOutButton: () => (
+                      <Button
+                          title="Sign Me out"
+                          onPress={signOut}
+                          color={styles.signOutBtn.color}
+                      />
+                  )
+              }}
           />
-          <MenuButton
-            title="MENU"
-            source={require('../../../assets/menu/recipe.png')}
-            onPress={() => {
-              navigation.navigate('Home');
-              navigation.closeDrawer();
-            }}
-          />
-          <MenuButton
-            title="ORDER"
-            source={require('../../../assets/menu/tray.png')}
-            onPress={() => {
-              navigation.navigate('Home');
-              navigation.closeDrawer();
-            }}
-          />
-        </View>
-      </View>
-    );
+          <Drawer.Screen name="Screen1" component={Screen1} />
+          <Drawer.Screen name="Screen2" component={Screen2} />
+      </Drawer.Navigator>
+
   }
 }
 
