@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, ScrollView, StyleSheet, Dimensions, Text, Image } from 'react-native';
 import { FAB } from 'react-native-paper';
-import imageCarousel from './../constants/imageCarousel';
+import imageCarousel from '../constants/imageCarousel';
 import colors from '../styles/colors';
 
 
@@ -10,7 +10,7 @@ class OfferCardCarousel extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <Text style={styles.offerHeading}>Discover Favorites</Text>
+                <Text style={styles.offerHeading}>Recomendados</Text>
                 <ScrollView
                     ref={(scrollView) => { this.scrollView = scrollView; }}
                     horizontal={true}
@@ -24,9 +24,9 @@ class OfferCardCarousel extends React.Component {
                         right: 30,
                     }}>
                     {
-                        imageCarousel.map((img,index) => {
+                        imageCarousel.map((img, index) => {
                             return <View style={styles.cardWrapper} key={`image-carouel-${index}`}>
-                                <Image source={img.url} style={{ ...styles.offerCard, ...styles.boxWithShadow }} />
+                                <Image source={img.url} style={styles.offerCard} />
                                 <Text style={styles.cardLabel}>{img.label}</Text>
                                 <Text style={styles.cardDescription}>{img.description}</Text>
                                 <FAB
@@ -50,42 +50,43 @@ const styles = StyleSheet.create({
         fontSize: 28,
         fontFamily: 'Lobster-Regular'
     },
-    orderBtn:{
-        backgroundColor:colors.primary,
-        width:width*0.30,
-        fontSize:14,
-        height:35,
-        padding:0,
-        justifyContent:'center'
+    orderBtn: {
+        backgroundColor: colors.primary,
+        width: width * 0.30,
+        // fontSize: 14,
+        height: 35,
+        padding: 0,
+        justifyContent: 'center'
     },
     cardWrapper: {
         flexDirection: 'column',
         marginBottom: 25,
     },
-    cardLabel: {    
-        fontSize:20,
-        fontFamily:'OpenSans-Regular',
-        color:colors.heading,
-        fontWeight:'bold'
+    cardLabel: {
+        fontSize: 20,
+        fontFamily: 'OpenSans-Regular',
+        color: colors.heading,
+        fontWeight: 'bold'
     },
     cardDescription: {
-        fontSize:14,
-        fontFamily:'OpenSans-Regular',
-        color:colors.subHeading,
-        marginBottom:5
+        fontSize: 14,
+        fontFamily: 'OpenSans-Regular',
+        color: colors.subHeading,
+        marginBottom: 5
     },
     offerCard: {
         width: width - width * 0.30,
         marginRight: 10,
         height: 320,
-        padding: 0
-    },
-    boxWithShadow: {
+        padding: 0,
+        
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 1 },
         shadowOpacity: 0.8,
         shadowRadius: 2,
         borderRadius: 5
+    },
+    boxWithShadow: {
     },
 });
 

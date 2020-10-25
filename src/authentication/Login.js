@@ -1,9 +1,12 @@
 import React from 'react';
 // import Logo from './../components/Logo';
-import { ScrollView, View, Text, StyleSheet, AsyncStorage } from 'react-native';
+import { ScrollView, View, Text, StyleSheet, AsyncStorage, Alert } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import colors from './../styles/colors';
 import { evoInputDefault, evoBlankContainer, evoScrollContainer } from './../styles/commonStyles';
+import axios from 'axios';
+import jwt_decode from "jwt-decode";
+
 
 class LoginScreen extends React.Component {
     static navigationOptions = {
@@ -13,14 +16,23 @@ class LoginScreen extends React.Component {
     state = {
         username: '',
         password: '',
+        erroMessage: ''
     };
 
-   
+
     render() {
         const { navigate } = this.props.navigation;
+        let errorMessage = <br></br>;
 
+        if (this.state.erroMessage != '') {
+            errorMessage = <p style={styles.errorMessageAlert}>{this.state.erroMessage}</p>
+
+        }
         return (
+
             <ScrollView style={evoScrollContainer}>
+
+                {this.state.erroMessage != '' ? errorMessage : null}
                 <View style={evoBlankContainer}>
                     <Text style={styles.titleText}>
                         Restaurante do Pereira
@@ -51,7 +63,6 @@ class LoginScreen extends React.Component {
                         onPress={this._signInAsync}>
                         Sign In
                     </Button>
-
                     <Button mode="outlined"
                         theme={{ colors: { primary: colors.primary } }}
                         style={styles.loginBtn}
@@ -87,9 +98,45 @@ class LoginScreen extends React.Component {
         );
     }
 
-    _signInAsync = async () => {
-        await AsyncStorage.setItem('userToken', 'abc');
-        this.props.navigation.navigate('Home');
+     _signInAsync = async () => {
+
+        const { navigation } = this.props.navigation;
+        const params = JSON.stringify({
+            Username: this.state.username,
+            Password: this.state.password
+        });
+        let logadoComSucesso = false;
+
+        let login = await axios.post('https://comandadigitalbackend.azurewebsites.net/login', params, {
+            "headers": {
+
+                "content-type": "application/json",
+
+            }
+        }).then(function (response) {
+            AsyncStorage.setItem('userToken', response.data.token);
+            logadoComSucesso = true;
+        })
+
+        if (logadoComSucesso === true) {
+            let userToken = await AsyncStorage.getItem('userToken');
+            let decodeToken = jwt_decode(userToken);
+            console.log(decodeToken);
+            if (decodeToken.Perfil == 4) {
+                this.props.navigation.navigate('Home')
+            }
+        }
+        else {
+            // Alert.alert(
+            //     "Error",
+            //     "Erro ao logar",
+            //     [
+            //       { text: "OK", onPress: () => console.log("OK Pressed") }
+            //     ],
+            //     { cancelable: false }
+            //   );
+            this.setState({ errorMessage: 'error' })
+        }
     };
 
 }
@@ -128,7 +175,18 @@ const styles = StyleSheet.create({
         fontSize: 18,
         marginTop: 15,
         marginBottom: 15
+    },
+    errorMessageAlert: {
+        color: '#721c24',
+        backgroundColor: '#f8d7da',
+        borderColor: '#f5c6cb',
+        position: 'relative',
+        padding: '.75rem 1.25rem',
+        marginBottom: '1rem',
+        //borderStyle:'1px solid transparent',
+        //borderRadius:'.25rem'
     }
+
 })
 
 

@@ -1,10 +1,9 @@
 import React from 'react';
-import { View, Image, Text, ScrollView, StyleSheet, AsyncStorage } from 'react-native';
+import { View, Image, Text, ScrollView, StyleSheet, } from 'react-native';
 import { Button } from 'react-native-paper';
-import MenuList from './../components/MenuList';
 // import menuList from './../constants/menuList';
-import colors from '../styles/colors';
-import { evoScrollContainer } from './../styles/commonStyles';
+import colors from '../../styles/colors'
+import { evoScrollContainer } from '../../styles/commonStyles';
 
 class Account extends React.Component {
 

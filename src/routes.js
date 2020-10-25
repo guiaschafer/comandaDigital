@@ -10,12 +10,13 @@ import RegisterScreen from './authentication/Register';
 import ForgotPasswordScreen from './authentication/ForgotPassword';
 import AuthLoadingScreen from './authentication/AuthLoading';
 
-import HomeScreen from './pages/Home/Main';
-import AccountScreen from './pages/Account';
+import HomeScreen from './pages/ClientPages/Home/Main';
+import AccountScreen from './pages/ClientPages/Account';
 
 import IconWithBadge from './components/IconWithBadge';
 import colors from './styles/colors';
 
+/* Authentication Stack */
 const AuthStack = createStackNavigator({
   Login: {
     screen: LoginScreen,
@@ -47,7 +48,9 @@ const AuthStack = createStackNavigator({
     }
   },
 });
+/* End - Authentication Stack */
 
+/* Screen Stacks */
 const HomeStack = createStackNavigator({
   Home: {
     screen: HomeScreen,
@@ -55,12 +58,6 @@ const HomeStack = createStackNavigator({
       headerShown: false
     },
   },
-  // Restraunt: {
-  //   screen: Restraunt,
-  //   navigationOptions: ({ navigation }) => ({
-  //     headerShown: false
-  //   })
-  // }
 });
 
 
@@ -71,21 +68,6 @@ const AccountStack = createStackNavigator({
       headerShown: false
     })
   },
-  // Address: {
-  //   screen: Address,
-  //   navigationOptions: ({ navigation }) => ({
-  //     headerTitle: 'Manage Address'
-  //   })
-  // },
-  // Profile: {
-  //   screen: Profile,
-  //   navigationOptions: ({ navigation }) => ({
-  //     headerTitle: 'Edit Profile'
-  //   })
-  // },
-  // Settings: {
-  //   screen: Settings
-  // }
 }, {
   defaultNavigationOptions: ({ navigation }) => ({
     headerStyle: {
@@ -99,7 +81,12 @@ const AccountStack = createStackNavigator({
     headerTintColor: 'white'
   })
 });
-const TabStack = createBottomTabNavigator({
+
+/* End - Screen Stacks */
+
+/* Perfil Stack */
+
+const ClientStack = createBottomTabNavigator({
   Home: HomeStack,
   // Cart: CartStack,
   Account: AccountStack,
@@ -132,18 +119,20 @@ const TabStack = createBottomTabNavigator({
   },
 });
 
+/* End - Perfil Stack */
+
+
 const RootStack = createSwitchNavigator(
   {
     AuthLoading: AuthLoadingScreen,
     Auth: AuthStack,
-    Home: TabStack
+    HomeClient: ClientStack
   },
   {
     initialRouteName: 'AuthLoading',
     headerMode: 'none'
   }
 );
-
 
 
 const Routes = createAppContainer(RootStack);

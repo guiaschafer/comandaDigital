@@ -4,7 +4,7 @@ import { TextInput, Button } from 'react-native-paper';
 // import Logo from './../components/Logo';
 import { evoInputDefault, evoBlankContainer } from './../styles/commonStyles';
 import colors from '../styles/colors';
-
+import axios from 'axios';
 export default class Register extends React.Component {
 
     state = {
@@ -40,14 +40,16 @@ export default class Register extends React.Component {
                 <TextInput
                     mode={'outlined'}
                     label='Password'
+                    secureTextEntry={true}
                     style={evoInputDefault}
                     value={this.state.password}
                     theme={{ colors: { primary: colors.primary } }}
-                    onChangeText={pwd => this.setState({ pwd })}
+                    onChangeText={pwd => this.setState({ password:pwd })}
                 />
                 <TextInput
                     mode={'outlined'}
                     label='Confirm Password'
+                    secureTextEntry={true}
                     style={evoInputDefault}
                     value={this.state.confirmPwd}
                     theme={{ colors: { primary: colors.primary } }}
@@ -57,11 +59,39 @@ export default class Register extends React.Component {
                     dark={true}
                     theme={{ colors: { primary: colors.primary } }}
                     style={styles.registerBtn}
-                    onPress={() => navigate('Home')}>
+                    onPress={this._signUpAsync}>
                     Register
                 </Button>
             </View>
         )
+    }
+
+    _signUpAsync = async () => {
+        if (this.state.password == this.state.confirmPwd) {
+            const { navigation } = this.props.navigation;
+            const params = JSON.stringify({
+                Login: this.state.email,
+                Password: this.state.password
+            });
+            let cadastroComSucesso = false;
+
+            await axios.post('https://comandadigitalbackend.azurewebsites.net/register', params, {
+                "headers": {
+
+                    "content-type": "application/json",
+
+                }
+            }).then(function (response) {             
+                cadastroComSucesso = true;
+            }).catch(function (error) {
+                console.log(error);
+            })
+
+            if (cadastroComSucesso === true) {
+                this.props.navigation.navigate('Login')
+            }
+        }
+        console.log("erro ao registar")
     }
 };
 
@@ -71,9 +101,9 @@ const styles = StyleSheet.create({
         padding: 5,
         marginTop: 15
     },
-    registerTxt:{
-        fontSize:16,
-        color:colors.subHeading,
-        marginBottom:10
+    registerTxt: {
+        fontSize: 16,
+        color: colors.subHeading,
+        marginBottom: 10
     }
 })
