@@ -1,6 +1,6 @@
 const details = [
     {
-        src:require('./../assets/restraunt/DelhiHeights.jpg'),
+        src:require('../../assets/restraunt/DelhiHeights.jpg'),
         heading:'Delhi Heights',
         subHeading:'North Indian & South Indian',
         offer:'20%',
@@ -9,7 +9,7 @@ const details = [
         cost:'$170',
     },
     {
-        src:require('./../assets/restraunt/chinaTown.jpg'),
+        src:require('../../assets/restraunt/chinaTown.jpg'),
         heading:'China Town',
         subHeading:'Chinese, Korean',
         offer:'20%',
@@ -18,7 +18,7 @@ const details = [
         cost:'$250',
     },
     {
-        src:require('./../assets/restraunt/pizzaMania.jpg'),
+        src:require('../../assets/restraunt/pizzaMania.jpg'),
         heading:'Pizza Mania',
         subHeading:'Pizza, Pasta, Chicken wings',
         offer:'25%',
@@ -27,7 +27,7 @@ const details = [
         cost:'$180',
     },
     {
-        src:require('./../assets/restraunt/TacoCorner.jpg'),
+        src:require('../../assets/restraunt/TacoCorner.jpg'),
         heading:'Taco Corner',
         subHeading:'Mexican',
         offer:'10%',
@@ -36,7 +36,7 @@ const details = [
         cost:'$350',
     },
     {
-        src:require('./../assets/restraunt/saladmen.jpg'),
+        src:require('../../assets/restraunt/saladmen.jpg'),
         heading:'Salad Men',
         subHeading:'Salad',
         offer:'5%',
@@ -45,7 +45,7 @@ const details = [
         cost:'$95',
     },
     {
-        src:require('./../assets/restraunt/burgerPlaza.jpg'),
+        src:require('../../assets/restraunt/burgerPlaza.jpg'),
         heading:'Burger Plaza',
         subHeading:'Fast food, Pizza, Burger, Fries',
         offer:'25%',
@@ -54,7 +54,7 @@ const details = [
         cost:'$225',
     },
     {
-        src:require('./../assets/restraunt/BrunosFriedChicken.jpg'),
+        src:require('../../assets/restraunt/BrunosFriedChicken.jpg'),
         heading:'Brunos Fried Chicken',
         subHeading:'Fast food, Fried Chicken',
         offer:'25%',
@@ -63,7 +63,7 @@ const details = [
         cost:'$200',
     },
     {
-        src:require('./../assets/restraunt/ShenaazsBakery.jpg'),
+        src:require('../../assets/restraunt/ShenaazsBakery.jpg'),
         heading:'Shehnaaz Bakery',
         subHeading:'Cakes, Desserts, Pastries',
         offer:'15%',
