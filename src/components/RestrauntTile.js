@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, Dimensions } from 'react-native';
 import { IconButton, Card } from 'react-native-paper';
-import RestrauntRatingDescription from './../components/RestrauntRatingDescription';
+import RestrauntRatingDescription from './RestrauntRatingDescription';
 import colors from '../styles/colors';
 const win = Dimensions.get('window');
 const ratio = win.width / 500;
@@ -13,7 +13,7 @@ class RestrauntTile extends React.Component {
         return (
             <View style={{ height: 350 }}>
                 <Image style={styles.tileImg}
-                    source={require('./../assets/restraunt/res6.jpg')} />
+                    source={require('../../assets/restraunt/res6.jpg')} />
                 <IconButton
                     icon="arrow-left"
                     color={'#fff'}
