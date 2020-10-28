@@ -8,6 +8,9 @@ import restrauntInfo from '../../../constants/restrauntInfo';
 import axios from 'axios';
 
 class Main extends React.Component {
+    constructor(props) {
+        super(props);
+    }
 
     state = {
         vegOnly: false,
@@ -16,7 +19,12 @@ class Main extends React.Component {
         allItems: []
     }
 
- 
+    // componentDidMount() {
+    //     this.navigationWillFocusListener = this.props.navigation.addListener('willFocus', () => {
+    //         this.setState({ addToCart: true });
+    //     })
+    // }
+
     updateCartState = (totalQuantity, totalPrice, allItems) => {
         this.setState({
             addToCart: totalQuantity > 0 ? true : false,
@@ -30,14 +38,16 @@ class Main extends React.Component {
         let totalPrice = 0;
         let allItems = [];
         response.map((itemList) => {
-            let selectedItem = JSON.parse(itemList[1]);
-            allItems.push(selectedItem);
-            if (selectedItem.Quantity > 0) {
-                let dishPrice = Number(selectedItem.price.substr(1)) * selectedItem.Quantity;
-                totalQuantity = Number(totalQuantity) + Number(selectedItem.Quantity);
-                totalPrice = totalPrice + dishPrice;
-            } else {
-                AsyncStorage.removeItem(`orderDetails${itemList.id}`);
+            if (itemList[0] != 'userToken') {
+                let selectedItem = JSON.parse(itemList[1]);
+                allItems.push(selectedItem);
+                if (selectedItem.Quantity > 0) {
+                    let dishPrice = Number(selectedItem.value) * selectedItem.Quantity;
+                    totalQuantity = Number(totalQuantity) + Number(selectedItem.Quantity);
+                    totalPrice = totalPrice + dishPrice;
+                } else {
+                    AsyncStorage.removeItem(`orderDetails${itemList.id}`);
+                }
             }
         });
         return {
@@ -72,6 +82,11 @@ class Main extends React.Component {
             }
         );
     }
+
+
+    // componentWillUnmount() {
+    //     this.navigationWillFocusListener.remove();
+    // }
 
     render() {
         const { navigate } = this.props.navigation;

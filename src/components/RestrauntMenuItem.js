@@ -7,49 +7,55 @@ import colors from '../styles/colors';
 import axios from 'axios';
 
 class RestrauntMenuItem extends React.Component {
+    constructor(props) {
+        super(props);
+    }
 
     state = {
         currentInitialVal: [],
         products: []
     }
 
-    async componentDidMount() {
-        let userToken = await AsyncStorage.getItem('userToken');
+     componentDidMount() {  
+        let userToken = AsyncStorage.getItem('userToken');
 
         const headers = {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + userToken
         }
 
-        let products = await axios.get("https://comandadigitalbackend.azurewebsites.net/products", {
+        let products = axios.get("https://comandadigitalbackend.azurewebsites.net/products", {
             headers: headers
         }).then(response => {
             const prods = response.data;
             this.setState({ products: prods });
         }).catch(error => console.log(error));;
 
-        // AsyncStorage.getAllKeys().then(
-        //     response => {
-        //         let temp = [];
-        //         let tempItem = [];
-        //         AsyncStorage.multiGet(response).then((itemList) => {
-        //             itemList.map((order) => {
-        //                 let details = JSON.parse(order[1]);
-        //                 details != null ? tempItem.push(details) : null;
-        //                 temp.push({
-        //                     id: details.id,
-        //                     qty: details.Quantity
-        //                 });
-        //             });
+        AsyncStorage.getAllKeys().then(
+            response => {
+                let temp = [];
+                let tempItem = [];
+                AsyncStorage.multiGet(response).then((itemList) => {
+                    itemList.map((order) => {
+                        if (order[0] != 'userToken') {
+                            let details = JSON.parse(order[1]);
+                            details != null ? tempItem.push(details) : null;
+                            temp.push({
+                                id: details.id,
+                                qty: details.Quantity
+                            });
+                        }
+                    });
 
-        //             if (tempItem.length > 0) {
-        //                 this.props.handleCart(tempItem[0], tempItem[0].Quantity);
-        //             }
-        //             this.setState({ currentInitialVal: temp });
-        //         });
-        //     }
-        // )
+                    if (tempItem.length > 0) {
+                        this.props.handleCart(tempItem[0], tempItem[0].Quantity);
+                    }
+                    this.setState({ currentInitialVal: temp });
+                });
+            })
     }
+
+   
 
     handleCartAdd = (item, qty) => {
         this.props.handleCart(item, qty);
@@ -59,7 +65,7 @@ class RestrauntMenuItem extends React.Component {
         const { products } = this.state;
         return (
             <View style={{ flex: 1 }}>
-                <View style={styles.vegOnlyWrapper}>
+                {/* <View style={styles.vegOnlyWrapper}>
                     <Icon name={'leaf'} size={20} color={colors.success} style={{ flexBasis: '5%' }} />
                     <Text style={styles.vegText}>Veg Only</Text>
                     <Switch
@@ -71,7 +77,7 @@ class RestrauntMenuItem extends React.Component {
                         }
                         }
                     />
-                </View>
+                </View> */}
                 <View style={styles.menuItemWrapper}>
                     {
                         products.map((item, index) => {

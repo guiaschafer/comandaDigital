@@ -12,6 +12,8 @@ import AuthLoadingScreen from './authentication/AuthLoading';
 
 import HomeScreen from './pages/ClientPages/Home/Main';
 import AccountScreen from './pages/ClientPages/Account';
+import CartScreen from './pages/ClientPages/Cart';
+import OrderSucessful from './pages/ClientPages/OrderSuccessful';
 
 import IconWithBadge from './components/IconWithBadge';
 import colors from './styles/colors';
@@ -54,9 +56,9 @@ const AuthStack = createStackNavigator({
 const HomeStack = createStackNavigator({
   Home: {
     screen: HomeScreen,
-    navigationOptions: {
+    navigationOptions: ({ navigation }) => ({
       headerShown: false
-    },
+    }),
   },
 });
 
@@ -82,13 +84,41 @@ const AccountStack = createStackNavigator({
   })
 });
 
+const CartStack = createStackNavigator({
+  Cart: {
+    screen: CartScreen,
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: 'Carrinho'
+    })
+  },
+  // CheckOut,
+  OrderSucessful: {
+    screen: OrderSucessful,
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: 'Pedido realizado'
+    })
+  }
+}, {
+  defaultNavigationOptions: ({ navigation }) => ({
+    headerStyle: {
+      backgroundColor: colors.primary
+    },
+    headerTitleStyle: {
+      color: 'white',
+      fontSize: 24,
+      minWidth: 200
+    },
+    headerTintColor: 'white'
+  })
+});
+
 /* End - Screen Stacks */
 
 /* Perfil Stack */
 
 const ClientStack = createBottomTabNavigator({
-  Home: HomeStack,
-  // Cart: CartStack,
+  Menu: HomeStack,
+  Cart: CartStack,
   Account: AccountStack,
   // History: OrderHistory
 }, {
@@ -97,15 +127,16 @@ const ClientStack = createBottomTabNavigator({
       const { routeName, params } = navigation.state;
       let IconComponent = Icon;
       let iconName;
-      if (routeName === 'Home') {
+      if (routeName === 'Menu') {
         iconName = 'home';
         IconComponent = IconWithBadge;
-      } 
+      }
       // else if (routeName === 'History') {
       //   iconName = 'clipboard';
-      // } else if (routeName === 'Cart') {
-      //   iconName = 'shopping-basket';
-      // } 
+      //}
+      else if (routeName === 'Cart') {
+        iconName = 'shopping-basket';
+      }
       else if (routeName === 'Account') {
         iconName = 'user';
       }
