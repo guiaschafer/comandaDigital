@@ -9,7 +9,10 @@ export default class Register extends React.Component {
 
     state = {
         name: '',
+        lastName: '',
         email: '',
+        cpf: '',
+        cellphone: '',
         password: '',
         confirmPwd: '',
     };
@@ -31,6 +34,14 @@ export default class Register extends React.Component {
                 />
                 <TextInput
                     mode={'outlined'}
+                    label='Sobrenome'
+                    style={evoInputDefault}
+                    value={this.state.lastName}
+                    theme={{ colors: { primary: colors.primary } }}
+                    onChangeText={lastName => this.setState({ lastName })}
+                />
+                <TextInput
+                    mode={'outlined'}
                     label='Email'
                     style={evoInputDefault}
                     value={this.state.email}
@@ -39,12 +50,28 @@ export default class Register extends React.Component {
                 />
                 <TextInput
                     mode={'outlined'}
+                    label='CPF'
+                    style={evoInputDefault}
+                    value={this.state.cpf}
+                    theme={{ colors: { primary: colors.primary } }}
+                    onChangeText={cpf => this.setState({ cpf })}
+                />
+                <TextInput
+                    mode={'outlined'}
+                    label='Celular'
+                    style={evoInputDefault}
+                    value={this.state.cellphone}
+                    theme={{ colors: { primary: colors.primary } }}
+                    onChangeText={cellphone => this.setState({ cellphone })}
+                />
+                <TextInput
+                    mode={'outlined'}
                     label='Password'
                     secureTextEntry={true}
                     style={evoInputDefault}
                     value={this.state.password}
                     theme={{ colors: { primary: colors.primary } }}
-                    onChangeText={pwd => this.setState({ password:pwd })}
+                    onChangeText={pwd => this.setState({ password: pwd })}
                 />
                 <TextInput
                     mode={'outlined'}
@@ -69,19 +96,24 @@ export default class Register extends React.Component {
     _signUpAsync = async () => {
         if (this.state.password == this.state.confirmPwd) {
             const { navigation } = this.props.navigation;
-            const params = JSON.stringify({
-                Login: this.state.email,
-                Password: this.state.password
+            const params = JSON.stringify({               
+                Password: this.state.password,
+                name: this.state.name,
+                lastName: this.state.lastName,
+                email: this.state.email,
+                cpf: this.state.cpf,
+                cellphone: this.state.cellphone,
+               
             });
             let cadastroComSucesso = false;
 
-            await axios.post('https://comandadigitalbackend.azurewebsites.net/register', params, {
+            await axios.post('http://localhost:65358//register', params, {
                 "headers": {
 
                     "content-type": "application/json",
 
                 }
-            }).then(function (response) {             
+            }).then(function (response) {
                 cadastroComSucesso = true;
             }).catch(function (error) {
                 console.log(error);

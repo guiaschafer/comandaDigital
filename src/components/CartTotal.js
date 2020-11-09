@@ -4,9 +4,9 @@ import { Card, Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import colors from '../styles/colors'
 
-const CartTotal = ({ navigation, subtotal, cWidth }) => {
+const CartTotal = ({ navigation, subtotal, cWidth, cartContent }) => {
     const { navigate } = navigation;
-
+    const cart = cartContent;
     const formatMoney = num => {
         return 'R$' + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     }
@@ -42,23 +42,28 @@ const CartTotal = ({ navigation, subtotal, cWidth }) => {
                     theme={{ colors: { primary: colors.success } }}
                     style={styles.proceedPay}
                     onPress={() => {
-                        AsyncStorage.getAllKeys().then(
-                            response => {
-                                AsyncStorage.multiGet(response).then((itemList) => {
-                                    itemList.map((order) => {
-                                        if (order[0] != 'userToken') {
-                                            AsyncStorage.removeItem(order[0]);
-                                        }
-                                    });                                  
-                                });
-                            }
-                        )
+                        let items = [];
+                        cart.map((cartItem, index) => {
+                            items.push(cartItem);
+                            // AsyncStorage.getAllKeys().then(
+                            //     response => {
+                            //         AsyncStorage.multiGet(response).then((itemList) => {
+                            //             itemList.map((order) => {
+                            //                 if (order[0] != 'userToken') {
+                            //                     AsyncStorage.removeItem(order[0]);
+                            //                 }
+                            //             });                                  
+                            //         });
+                            //     }
+                            //)
+                        })
+
                         navigate('OrderSucessful')
                     }}>
                     Confirmar Pedido
                 </Button>
             </Card>
-        </React.Fragment>
+        </React.Fragment >
     );
 
 }

@@ -81,7 +81,7 @@ class Cart extends React.Component {
                                 })
                             }
 
-                            <CartTotal subtotal={this.state.subtotal} navigation={this.props.navigation} cWidth={cartWidth - cartWidth * 0.12} />
+                            <CartTotal cartContent={this.state.cartContent} subtotal={this.state.subtotal} navigation={this.props.navigation} cWidth={cartWidth - cartWidth * 0.12} />
                         </View>
                 }
             </ScrollView>
