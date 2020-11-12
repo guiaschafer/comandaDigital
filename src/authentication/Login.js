@@ -107,7 +107,7 @@ class LoginScreen extends React.Component {
         });
         let logadoComSucesso = false;
 
-        let login = await axios.post('https://comandadigitalbackend.azurewebsites.netlogin', params, {
+        let login = await axios.post('https://comandadigitalbackend.azurewebsites.net/login', params, {
             "headers": {
 
                 "content-type": "application/json",
