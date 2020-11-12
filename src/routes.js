@@ -14,6 +14,8 @@ import HomeScreen from './pages/ClientPages/Home/Main';
 import AccountScreen from './pages/ClientPages/Account';
 import CartScreen from './pages/ClientPages/Cart';
 import OrderSucessful from './pages/ClientPages/OrderSuccessful';
+import OrderHistory from './pages/ClientPages/OrderHistory';
+import CheckOut from './pages/ClientPages/CheckOut';
 
 import IconWithBadge from './components/IconWithBadge';
 import colors from './styles/colors';
@@ -91,11 +93,38 @@ const CartStack = createStackNavigator({
       headerTitle: 'Carrinho'
     })
   },
-  // CheckOut,
   OrderSucessful: {
     screen: OrderSucessful,
     navigationOptions: ({ navigation }) => ({
       headerTitle: 'Pedido realizado'
+    })
+  }
+}, {
+  defaultNavigationOptions: ({ navigation }) => ({
+    headerStyle: {
+      backgroundColor: colors.primary
+    },
+    headerTitleStyle: {
+      color: 'white',
+      fontSize: 24,
+      minWidth: 200
+    },
+    headerTintColor: 'white'
+  })
+});
+
+const OrderHistoryStack = createStackNavigator({
+  OrderHistory: {
+    screen: OrderHistory,
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: 'Pedidos'
+    })
+  },
+  CheckOut: {
+    screen: CheckOut,
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: 'Pagamento'
+
     })
   }
 }, {
@@ -118,9 +147,9 @@ const CartStack = createStackNavigator({
 
 const ClientStack = createBottomTabNavigator({
   Menu: HomeStack,
-  Cart: CartStack,
-  Account: AccountStack,
-  // History: OrderHistory
+  Carrinho: CartStack,  
+  Pedidos: OrderHistoryStack,
+  Conta: AccountStack
 }, {
   defaultNavigationOptions: ({ navigation }) => ({
     tabBarIcon: ({ focused, horizontal, tintColor }) => {
@@ -131,13 +160,13 @@ const ClientStack = createBottomTabNavigator({
         iconName = 'home';
         IconComponent = IconWithBadge;
       }
-      // else if (routeName === 'History') {
-      //   iconName = 'clipboard';
-      //}
-      else if (routeName === 'Cart') {
+      else if (routeName === 'Pedidos') {
+        iconName = 'clipboard';
+      }
+      else if (routeName === 'Carrinho') {
         iconName = 'shopping-basket';
       }
-      else if (routeName === 'Account') {
+      else if (routeName === 'Conta') {
         iconName = 'user';
       }
 

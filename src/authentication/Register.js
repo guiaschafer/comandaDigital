@@ -97,9 +97,9 @@ export default class Register extends React.Component {
         if (this.state.password == this.state.confirmPwd) {
             const { navigation } = this.props.navigation;
             const params = JSON.stringify({               
-                Password: this.state.password,
+                password: this.state.password,
                 name: this.state.name,
-                lastName: this.state.lastName,
+                lastname: this.state.lastName,
                 email: this.state.email,
                 cpf: this.state.cpf,
                 cellphone: this.state.cellphone,
@@ -107,7 +107,7 @@ export default class Register extends React.Component {
             });
             let cadastroComSucesso = false;
 
-            await axios.post('http://localhost:65358//register', params, {
+            await axios.post('https://comandafrontend.azurewebsites.net/register', params, {
                 "headers": {
 
                     "content-type": "application/json",

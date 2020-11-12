@@ -3,35 +3,47 @@ import { View, Text, StyleSheet } from 'react-native';
 import { Surface, Button, Colors } from 'react-native-paper';
 import colors from './../styles/colors';
 
-const OrderCard = ({ orderDetail }) => {
+const OrderCard = ({ navigation, orderDetail }) => {
+    const { navigate } = navigation;
+
+    const formatMoney = num => {
+        return 'R$' + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    }
     return (
         <Surface style={{ ...styles.orderCardWrapper, ...styles.boxWithShadow }} onPress={() => { console.log("testing") }}>
             <View style={styles.orderDescription}>
                 <View>
-                    <Text style={styles.orderNum}>Order No. #{Math.floor(Math.random() * 90000) + 10000}</Text>
-                    <Text style={styles.orderTitle}>{orderDetail.name}</Text>
-                    <Text style={styles.orderSubText}>{orderDetail.area}</Text>
+                    <Text style={styles.orderNum}>Pedido Nº {orderDetail.id}</Text>
+                    {/* <Text style={styles.orderTitle}>{orderDetail.name}</Text> */}
+                    {/* <Text style={styles.orderSubText}>{orderDetail.area}</Text> */}
                 </View>
                 <View>
-                    <Text style={styles.orderAmountText}>{orderDetail.amount}</Text>
+                    <Text style={styles.orderAmountText}>R$ {orderDetail.valorTotal}</Text>
                 </View>
             </View>
-            <View style={styles.ordePrice}>
-                <Text style={styles.orderNumText} >{orderDetail.orderDetails}</Text>
-                <Text style={styles.orderSubText}>{orderDetail.time}</Text>
+
+            <View>
+                {orderDetail.itens.map((item, index) => {
+                    return <Text key={`item-card-${index}`} style={styles.orderNumText} >{item.quantity}x - {item.name} - Total: {item.quantity * item.value}</Text>
+                })}
+                {/* <Text style={styles.orderSubText}>{orderDetail.time}</Text> */}
             </View>
             <View style={styles.orderBtns}>
                 <Button mode="contained"
                     dark={true}
                     theme={{ colors: { primary: colors.primary } }}
                     onPress={() => console.log("")}>
-                    REORDER
+                    {orderDetail.status}
                 </Button>
-                <Button mode="outlined"
+                {orderDetail.CodigoStatus !== 2 ? <Button mode="outlined"
                     theme={{ colors: { primary: colors.heading } }}
-                    onPress={() => console.log("")}>
-                    RATE MEAL
-                </Button>
+                    onPress={() => navigate('CheckOut', {
+                        totalAmt: formatMoney(orderDetail.valorTotal),
+                        orderId: orderDetail.id
+
+                    })}>
+                    Pagar
+                </Button> : null}
             </View>
         </Surface>
     );
@@ -44,15 +56,15 @@ const styles = StyleSheet.create({
         height: 195,
         marginBottom: 20,
         borderRadius: 5,
-        padding:15,
+        padding: 15,
         borderColor: colors.outline,
-        borderWidth: 1,
+        borderWidth: 3,
         fontFamily: 'OpenSans-Regular'
     },
-    orderNum:{
-        fontSize:12,
-        fontFamily:'OpenSans-Light',
-        marginBottom:5
+    orderNum: {
+        fontSize: 12,
+        fontFamily: 'OpenSans-Light',
+        marginBottom: 5
     },
     orderDescription: {
         marginBottom: 5,
@@ -60,7 +72,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'space-between',
         flexDirection: 'row',
-        fontFamily: 'OpenSans-Regular'
+        // fontFamily: 'OpenSans-Regular'
     },
     orderAmountText: {
         fontSize: 18,
@@ -73,12 +85,12 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         marginTop: 10,
-        fontFamily: 'OpenSans-Regular'
+        // fontFamily: 'OpenSans-Regular'
     },
     orderTitle: {
         fontSize: 18,
         fontWeight: 'bold',
-        color: colors.heading,
+        // color: colors.heading,
         fontFamily: 'OpenSans-Regular'
     },
     orderSubText: {

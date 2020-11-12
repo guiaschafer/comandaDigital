@@ -17,19 +17,20 @@ class RestrauntMenuItem extends React.Component {
     }
 
      componentDidMount() {  
-        let userToken = AsyncStorage.getItem('userToken');
-
+        let userToken = AsyncStorage.getItem('userToken').then((value) => {
+            userToken = value
+        });
         const headers = {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + userToken
         }
 
-        let products = axios.get("https://comandadigitalbackend.azurewebsites.net/products", {
+        let products = axios.get("https://comandafrontend.azurewebsites.net/products", {
             headers: headers
         }).then(response => {
             const prods = response.data;
             this.setState({ products: prods });
-        }).catch(error => console.log(error));;
+        }).catch(error => console.log(error));
 
         AsyncStorage.getAllKeys().then(
             response => {

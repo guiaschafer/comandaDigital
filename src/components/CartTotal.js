@@ -2,7 +2,8 @@ import React from 'react';
 import { View, Text, StyleSheet, AsyncStorage } from 'react-native';
 import { Card, Button } from 'react-native-paper';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import colors from '../styles/colors'
+import colors from '../styles/colors';
+import axios from 'axios';
 
 const CartTotal = ({ navigation, subtotal, cWidth, cartContent }) => {
     const { navigate } = navigation;
@@ -41,8 +42,12 @@ const CartTotal = ({ navigation, subtotal, cWidth, cartContent }) => {
                     dark={true}
                     theme={{ colors: { primary: colors.success } }}
                     style={styles.proceedPay}
-                    onPress={() => {
+                    onPress={async () => {
                         let items = [];
+                        let userToken = '';
+                        await AsyncStorage.getItem('userToken').then((value) => {
+                            userToken = value
+                        });
                         cart.map((cartItem, index) => {
                             items.push(cartItem);
                             // AsyncStorage.getAllKeys().then(
@@ -57,8 +62,29 @@ const CartTotal = ({ navigation, subtotal, cWidth, cartContent }) => {
                             //     }
                             //)
                         })
+                        const params = JSON.stringify(items);
 
-                        navigate('OrderSucessful')
+                        const headers = {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + userToken
+                        }
+
+                        let login = await axios.post('https://comandafrontend.azurewebsites.net/orderConfirm', params,{
+                            headers: headers
+                        }).then(function (response) {
+                            AsyncStorage.getAllKeys().then(
+                                response => {
+                                    AsyncStorage.multiGet(response).then((itemList) => {
+                                        itemList.map((order) => {
+                                            if (order[0] != 'userToken') {
+                                                AsyncStorage.removeItem(order[0]);
+                                            }c
+                                        });
+                                    });
+                                }
+                            )
+                            navigate('OrderSucessful')
+                        })
                     }}>
                     Confirmar Pedido
                 </Button>

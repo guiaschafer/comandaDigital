@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, Text, ScrollView, StyleSheet, } from 'react-native';
+import { View, Image, Text, ScrollView, StyleSheet, AsyncStorage} from 'react-native';
 import { Button } from 'react-native-paper';
 // import menuList from './../constants/menuList';
 import colors from '../../styles/colors'

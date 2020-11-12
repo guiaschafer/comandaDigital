@@ -107,7 +107,7 @@ class LoginScreen extends React.Component {
         });
         let logadoComSucesso = false;
 
-        let login = await axios.post('https://comandadigitalbackend.azurewebsites.net/login', params, {
+        let login = await axios.post('https://comandafrontend.azurewebsites.net/login', params, {
             "headers": {
 
                 "content-type": "application/json",
@@ -122,7 +122,7 @@ class LoginScreen extends React.Component {
             let userToken = await AsyncStorage.getItem('userToken');
             let decodeToken = jwt_decode(userToken);
             console.log(decodeToken);
-            if (decodeToken.Perfil == 4) {
+            if (decodeToken.role == 4) {
                 this.props.navigation.navigate('Home')
             }
         }
