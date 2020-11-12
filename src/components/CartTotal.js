@@ -69,7 +69,7 @@ const CartTotal = ({ navigation, subtotal, cWidth, cartContent }) => {
                             'Authorization': 'Bearer ' + userToken
                         }
 
-                        let login = await axios.post('https://comandadigitalbackend.azurewebsites.netorderConfirm', params,{
+                        let login = await axios.post('https://comandadigitalbackend.azurewebsites.net/orderConfirm', params,{
                             headers: headers
                         }).then(function (response) {
                             AsyncStorage.getAllKeys().then(
