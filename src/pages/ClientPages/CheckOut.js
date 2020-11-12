@@ -93,7 +93,7 @@ class CheckOut extends React.Component {
                             'Authorization': 'Bearer ' + userToken
                         }
 
-                        let login = await axios.post('https://comandafrontend.azurewebsites.net/confirmPayment', params,{
+                        let login = await axios.post('https://comandadigitalbackend.azurewebsites.net/confirmPayment', params,{
                             headers: headers
                         }).then(function (response) {                           
                             navigate('OrderSucessful')

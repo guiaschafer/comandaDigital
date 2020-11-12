@@ -25,7 +25,7 @@ class RestrauntMenuItem extends React.Component {
             'Authorization': 'Bearer ' + userToken
         }
 
-        let products = axios.get("https://comandafrontend.azurewebsites.net/products", {
+        let products = axios.get("https://comandadigitalbackend.azurewebsites.net/products", {
             headers: headers
         }).then(response => {
             const prods = response.data;

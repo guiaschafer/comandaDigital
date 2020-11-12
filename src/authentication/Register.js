@@ -107,7 +107,7 @@ export default class Register extends React.Component {
             });
             let cadastroComSucesso = false;
 
-            await axios.post('https://comandafrontend.azurewebsites.net/register', params, {
+            await axios.post('https://comandadigitalbackend.azurewebsites.net/register', params, {
                 "headers": {
 
                     "content-type": "application/json",
