@@ -16,7 +16,8 @@ class RestrauntMenuItem extends React.Component {
         products: []
     }
 
-     componentDidMount() {  
+    componentDidMount() {
+        this.navigationWillFocusListener = this.props.navigation.addListener('didFocus', () => {
         let userToken = AsyncStorage.getItem('userToken').then((value) => {
             userToken = value
         });
@@ -54,9 +55,10 @@ class RestrauntMenuItem extends React.Component {
                     this.setState({ currentInitialVal: temp });
                 });
             })
+        })
     }
 
-   
+
 
     handleCartAdd = (item, qty) => {
         this.props.handleCart(item, qty);

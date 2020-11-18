@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text, ScrollView, StyleSheet, AsyncStorage } from 'react-native';
 import { Button } from 'react-native-paper';
-import RestrauntTile from '../../../components/RestrauntTile'
-import RestrauntMenuItem from '../../../components/RestrauntMenuItem';
-import colors from '../../../styles/colors';
-import restrauntInfo from '../../../constants/restrauntInfo';
+import RestrauntTile from '../../components/RestrauntTile'
+import RestrauntMenuItem from '../../components/RestrauntMenuItem';
+import colors from '../../styles/colors';
+import restrauntInfo from '../../constants/restrauntInfo';
 import axios from 'axios';
 
 class Main extends React.Component {
@@ -20,19 +20,8 @@ class Main extends React.Component {
     }
 
     componentDidMount() {
-        this.navigationWillFocusListener = this.props.navigation.addListener('didFocus', () => {
-            AsyncStorage.getAllKeys().then(orderList => {
-                if (orderList.length !== 0) {
-                    AsyncStorage.multiGet(orderList).then(response => {
-                        let cartDetails = this.getCartItemDetails(response);
-                        this.updateCartState(cartDetails.totalQuantity, cartDetails.totalPrice, cartDetails.allItems);
-                    });
-                } else {
-                    this.setState({
-                        allItems: []
-                    });
-                }
-            });
+        this.navigationWillFocusListener = this.props.navigation.addListener('didFocus', async () => {
+            getCartItemDetails();
         })
     }
 
@@ -106,7 +95,7 @@ class Main extends React.Component {
                 <ScrollView style={styles.restrauntWrapper}>
                     <RestrauntTile tileData={restrauntInfo.tileInfo} navigation={this.props.navigation} />
                     <View>
-                        <RestrauntMenuItem navigation={this.props.navigation} handleCart={(item, qty) => {
+                        <RestrauntMenuItem handleCart={(item, qty) => {
                             this.handleCart(item, qty);
                         }} />
                     </View>

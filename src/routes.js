@@ -17,6 +17,9 @@ import OrderSucessful from './pages/ClientPages/OrderSuccessful';
 import OrderHistory from './pages/ClientPages/OrderHistory';
 import CheckOut from './pages/ClientPages/CheckOut';
 
+import HomeAdminScreen from './pages/AdminPages/Main';
+
+
 import IconWithBadge from './components/IconWithBadge';
 import colors from './styles/colors';
 
@@ -58,6 +61,15 @@ const AuthStack = createStackNavigator({
 const HomeStack = createStackNavigator({
   Home: {
     screen: HomeScreen,
+    navigationOptions: ({ navigation }) => ({
+      headerShown: false
+    }),
+  },
+});
+
+const HomeAdminStack = createStackNavigator({
+  HomeAdmin: {
+    screen: HomeAdminScreen,
     navigationOptions: ({ navigation }) => ({
       headerShown: false
     }),
@@ -179,6 +191,40 @@ const ClientStack = createBottomTabNavigator({
   },
 });
 
+const AdminStack = createBottomTabNavigator({
+  Menu: HomeAdminStack,
+  // Carrinho: CartStack,  
+  // Pedidos: OrderHistoryStack,
+  Conta: AccountStack
+}, {
+  defaultNavigationOptions: ({ navigation }) => ({
+    tabBarIcon: ({ focused, horizontal, tintColor }) => {
+      const { routeName, params } = navigation.state;
+      let IconComponent = Icon;
+      let iconName;
+      if (routeName === 'Menu') {
+        iconName = 'home';
+        IconComponent = IconWithBadge;
+      }
+      // else if (routeName === 'Pedidos') {
+      //   iconName = 'clipboard';
+      // }
+      // else if (routeName === 'Carrinho') {
+      //   iconName = 'shopping-basket';
+      // }
+      else if (routeName === 'Conta') {
+        iconName = 'user';
+      }
+
+      return <IconComponent name={iconName} size={25} color={tintColor} />;
+    },
+  }),
+  tabBarOptions: {
+    activeTintColor: colors.primary,
+    inactiveTintColor: 'gray',
+  },
+});
+
 /* End - Perfil Stack */
 
 
@@ -186,7 +232,8 @@ const RootStack = createSwitchNavigator(
   {
     AuthLoading: AuthLoadingScreen,
     Auth: AuthStack,
-    HomeClient: ClientStack
+    HomeClient: ClientStack,
+    HomeAdmin: AdminStack
   },
   {
     initialRouteName: 'AuthLoading',

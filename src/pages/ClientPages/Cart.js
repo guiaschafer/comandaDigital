@@ -18,10 +18,11 @@ class Cart extends React.Component {
     }
 
     componentDidMount() {
-        this.navigationWillFocusListener = this.props.navigation.addListener('willFocus', () => {
+        this.navigationWillFocusListener = this.props.navigation.addListener('didFocus', () => {
             this.getCartContent();
         })
     }
+
 
     getCartContent() {
         let subtotal = 0;
