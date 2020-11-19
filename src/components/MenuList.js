@@ -3,26 +3,33 @@ import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import colors from './../styles/colors';
 
-const MenuList = ({ navigation,menuData }) => {
-    const {navigate}=navigation;
-    return (
-        <View style={styles.menuContainer}>
-            {
-                menuData.map((menu, index) => {
-                    {
-                        return <TouchableOpacity style={styles.menuWrapper}
-                            onPress={() =>navigate(menu.navUrl)} key={`menu-list-${index}`}>
-                            <View style={styles.menuLink}>
-                                <Icon name={menu.icon} size={24} color={colors.primary} />
-                                <Text style={styles.menuText}>{menu.title}</Text>
-                            </View>
-                            <Icon name="chevron-right" size={16} />
-                        </TouchableOpacity>
-                    }
-                })
-            }
-        </View>
-    );
+class MenuList extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    render() {
+        const { navigate } = this.props.navigation;
+        const menuData = this.props.menuData;
+        return (
+            <View style={styles.menuContainer}>
+                {
+                    menuData.map((menu, index) => {
+                        {
+                            return <TouchableOpacity style={styles.menuWrapper}
+                                onPress={() => navigate(menu.navUrl)} key={`menu-list-${index}`}>
+                                <View style={styles.menuLink}>
+                                    <Icon name={menu.icon} size={24} color={colors.primary} />
+                                    <Text style={styles.menuText}>{menu.title}</Text>
+                                </View>
+                                <Icon name="chevron-right" size={16} />
+                            </TouchableOpacity>
+                        }
+                    })
+                }
+            </View>
+        );
+    }
 }
 
 const styles = StyleSheet.create({
@@ -42,7 +49,7 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        height:55
+        height: 55
     },
     menuText: {
         paddingLeft: 20,

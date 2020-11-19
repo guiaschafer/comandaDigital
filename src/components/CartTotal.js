@@ -69,7 +69,7 @@ const CartTotal = ({ navigation, subtotal, cWidth, cartContent }) => {
                             'Authorization': 'Bearer ' + userToken
                         }
 
-                        let login = await axios.post('https://comandadigitalbackend.azurewebsites.net/orderConfirm', params,{
+                        let login = await axios.post('https://comandadigitalbackend.azurewebsites.net/orderConfirm', params, {
                             headers: headers
                         }).then(function (response) {
                             AsyncStorage.getAllKeys().then(
@@ -78,11 +78,12 @@ const CartTotal = ({ navigation, subtotal, cWidth, cartContent }) => {
                                         itemList.map((order) => {
                                             if (order[0] != 'userToken') {
                                                 AsyncStorage.removeItem(order[0]);
-                                            }c
+                                            }
                                         });
                                     });
                                 }
                             )
+
                             navigate('OrderSucessful')
                         })
                     }}>

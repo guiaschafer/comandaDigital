@@ -18,6 +18,12 @@ import OrderHistory from './pages/ClientPages/OrderHistory';
 import CheckOut from './pages/ClientPages/CheckOut';
 
 import HomeAdminScreen from './pages/AdminPages/Main';
+import OrderHistoryAdmin from './pages/AdminPages/OrderHistory';
+import AccountAdminScreen from './pages/AdminPages/Account';
+import CategoriesScreen from './pages/AdminPages/Categories';
+import ProductsScreen from './pages/AdminPages/Products';
+import UpdateProductsScreen from './pages/AdminPages/UpdateProducts';
+import UpdateCategoriesScreen from './pages/AdminPages/UpdateCategories';
 
 
 import IconWithBadge from './components/IconWithBadge';
@@ -83,7 +89,7 @@ const AccountStack = createStackNavigator({
     navigationOptions: ({ navigation }) => ({
       headerShown: false
     })
-  },
+  }
 }, {
   defaultNavigationOptions: ({ navigation }) => ({
     headerStyle: {
@@ -98,6 +104,51 @@ const AccountStack = createStackNavigator({
   })
 });
 
+
+const AccountAdminStack = createStackNavigator({  
+  Account: {
+    screen: AccountAdminScreen,
+    navigationOptions: ({ navigation }) => ({
+      headerShown: false
+    })
+  },
+  Categories: {
+    screen: CategoriesScreen,
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: 'Categorias'
+    })
+  },
+  Products: {
+    screen: ProductsScreen,
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: 'Produtos'
+    })
+  },
+  UpdateProducts: {
+    screen: UpdateProductsScreen,
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: 'Atualizar Produto'
+    })
+  },
+  UpdateCategories: {
+    screen: UpdateCategoriesScreen,
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: 'Atualizar Categoria'
+    })
+  },
+}, {
+  defaultNavigationOptions: ({ navigation }) => ({
+    headerStyle: {
+      backgroundColor: colors.primary
+    },
+    headerTitleStyle: {
+      color: 'white',
+      fontSize: 24,
+      minWidth: 200
+    },
+    headerTintColor: 'white'
+  })
+});
 const CartStack = createStackNavigator({
   Cart: {
     screen: CartScreen,
@@ -125,7 +176,7 @@ const CartStack = createStackNavigator({
   })
 });
 
-const OrderHistoryStack = createStackNavigator({
+const OrderHistoryAdminStack = createStackNavigator({
   OrderHistory: {
     screen: OrderHistory,
     navigationOptions: ({ navigation }) => ({
@@ -153,6 +204,26 @@ const OrderHistoryStack = createStackNavigator({
   })
 });
 
+const OrderHistoryStack = createStackNavigator({
+  OrderHistory: {
+    screen: OrderHistory,
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: 'Pedidos'
+    })
+  }
+}, {
+  defaultNavigationOptions: ({ navigation }) => ({
+    headerStyle: {
+      backgroundColor: colors.primary
+    },
+    headerTitleStyle: {
+      color: 'white',
+      fontSize: 24,
+      minWidth: 200
+    },
+    headerTintColor: 'white'
+  })
+});
 /* End - Screen Stacks */
 
 /* Perfil Stack */
@@ -194,8 +265,8 @@ const ClientStack = createBottomTabNavigator({
 const AdminStack = createBottomTabNavigator({
   Menu: HomeAdminStack,
   // Carrinho: CartStack,  
-  // Pedidos: OrderHistoryStack,
-  Conta: AccountStack
+  Pedidos: OrderHistoryAdminStack,
+  Conta: AccountAdminStack
 }, {
   defaultNavigationOptions: ({ navigation }) => ({
     tabBarIcon: ({ focused, horizontal, tintColor }) => {
@@ -206,9 +277,9 @@ const AdminStack = createBottomTabNavigator({
         iconName = 'home';
         IconComponent = IconWithBadge;
       }
-      // else if (routeName === 'Pedidos') {
-      //   iconName = 'clipboard';
-      // }
+      else if (routeName === 'Pedidos') {
+        iconName = 'clipboard';
+      }
       // else if (routeName === 'Carrinho') {
       //   iconName = 'shopping-basket';
       // }

@@ -21,7 +21,18 @@ class Main extends React.Component {
 
     componentDidMount() {
         this.navigationWillFocusListener = this.props.navigation.addListener('didFocus', async () => {
-            getCartItemDetails();
+            AsyncStorage.getAllKeys().then(orderList => {
+                if (orderList.length !== 0) {
+                    AsyncStorage.multiGet(orderList).then(response => {
+                        let cartDetails = this.getCartItemDetails(response);
+                        this.updateCartState(cartDetails.totalQuantity, cartDetails.totalPrice, cartDetails.allItems);
+                    });
+                } else {
+                    this.setState({
+                        allItems: []
+                    });
+                }
+            });
         })
     }
 
@@ -95,7 +106,7 @@ class Main extends React.Component {
                 <ScrollView style={styles.restrauntWrapper}>
                     <RestrauntTile tileData={restrauntInfo.tileInfo} navigation={this.props.navigation} />
                     <View>
-                        <RestrauntMenuItem handleCart={(item, qty) => {
+                        <RestrauntMenuItem navigation={this.props.navigation} handleCart={(item, qty) => {
                             this.handleCart(item, qty);
                         }} />
                     </View>

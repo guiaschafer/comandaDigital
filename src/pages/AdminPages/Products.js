@@ -1,0 +1,123 @@
+import React from 'react';
+import { ScrollView, View, StyleSheet, Image, Text, AsyncStorage } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import { Card, Button } from 'react-native-paper';
+import { evoScrollContainer, evoDefaultBtn } from '../../styles/commonStyles';
+import colors from '../../styles/colors';
+import axios from 'axios';
+
+class Address extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
+    state = {
+        products: []
+    }
+
+    async componentDidMount() {
+        let userToken = '';
+        await AsyncStorage.getItem('userToken').then((value) => {
+            userToken = value
+        });
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + userToken
+        }
+
+        let x = await axios.get("https://comandadigitalbackend.azurewebsites.net/products", {
+            headers: headers
+        }).then(response => {
+            const prods = response.data;
+            this.setState({ products: prods });
+        }).catch(error => console.log(error));
+    }
+
+    render() {
+        const { products } = this.state;
+        const navigation = this.props.navigation;
+
+        return (
+            <ScrollView style={evoScrollContainer}>
+                {
+                    products.map((item, index) => {
+                        return <Card elevation={5} style={styles.addressCardWrapper} key={`address-${index}`}>
+                            <Card.Content>
+                                <View style={styles.addressWrapper}>
+                                    <Image source={item.urlImagem} style={styles.addIcon} />
+                                    <View style={styles.addressTxt}>
+                                        <Text style={styles.titleTxt}>{item.name}</Text>
+                                        <Text style={styles.titleTxt}>{item.description}</Text>
+                                    </View>
+                                </View>
+                                <View style={styles.addressBtnWrapper}>
+                                    <Button mode="text"
+                                        dark={true}
+                                        theme={{ colors: { primary: colors.primary } }}
+                                        onPress={() => {
+                                            navigation.navigate("UpdateProducts", {
+                                                item
+                                            })
+                                        }}>
+                                        Editar
+                            </Button>
+                                    <Button mode="text"
+                                        dark={true}
+                                        theme={{ colors: { primary: colors.primary } }}
+                                        onPress={() => console.log("Del Address")}>
+                                        Deletar
+                            </Button>
+                                </View>
+                            </Card.Content>
+                        </Card>
+                    })
+                }
+                <Button mode="contained"
+                    dark={true}
+                    theme={{ colors: { primary: colors.success } }}
+                    style={styles.newAddBtn}
+                    onPress={() => console.log("Add new address")}>
+                    Novo
+            </Button>
+            </ScrollView>
+        );
+    }
+}
+
+const styles = StyleSheet.create({
+    addressCardWrapper: {
+        margin: 10
+    },
+    addressWrapper: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+    },
+    addIcon: {
+        flex: 5,
+        resizeMode: "contain",
+        height: 50,
+        width: 100
+    },
+    addressTxt: {
+        flex: 5
+    },
+    addressBtnWrapper: {
+        display: 'flex',
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        marginTop: 10
+    },
+    titleTxt: {
+        fontSize: 16,
+        fontFamily: 'OpenSans-Regular',
+        fontWeight: 'bold'
+    },
+    newAddBtn: {
+        margin: 15,
+        padding: 10
+    }
+});
+
+export default Address;
+

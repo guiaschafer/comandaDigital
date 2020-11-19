@@ -1,19 +1,19 @@
 const menuList = [
     {
-        title:'Manage Address',
+        title:'Categorias',
         icon:'home',
-        navUrl:'Address'
+        navUrl:'Categories'
     },
     {
-        title:'Favorites',
+        title:'Produtos',
         icon:'gratipay',
-        navUrl:''
-    },
-    {
-        title:'Settings',
-        icon:'cog',
-        navUrl:'Settings'
-    },
+        navUrl:'Products'
+    }
+    // {
+    //     title:'Settings',
+    //     icon:'cog',
+    //     navUrl:'Settings'
+    // },
 ];
 
 export default menuList;

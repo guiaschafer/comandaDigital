@@ -123,7 +123,10 @@ class LoginScreen extends React.Component {
             let decodeToken = jwt_decode(userToken);
             console.log(decodeToken);
             if (decodeToken.role == 4) {
-                this.props.navigation.navigate('Home')
+                this.props.navigation.navigate('Home');
+            }
+            else if (decodeToken.role == 0) {
+                this.props.navigation.navigate('HomeAdmin');
             }
         }
         else {

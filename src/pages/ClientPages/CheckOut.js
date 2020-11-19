@@ -95,8 +95,11 @@ class CheckOut extends React.Component {
 
                         let login = await axios.post('https://comandadigitalbackend.azurewebsites.net/confirmPayment', params,{
                             headers: headers
-                        }).then(function (response) {                           
+                        }).then(function (response) {         
+                                              
                             navigate('OrderSucessful')
+                        }).catch(function (response){
+                            console.log(response);
                         })
                     }}>
                     Pagar
