@@ -77,7 +77,7 @@ class Address extends React.Component {
                     dark={true}
                     theme={{ colors: { primary: colors.success } }}
                     style={styles.newAddBtn}
-                    onPress={() => props.navigation.navigate("UpdateCategories")}>
+                    onPress={() => navigation.navigate("InsertCategories")}>
                     Novo
             </Button>
             </ScrollView>

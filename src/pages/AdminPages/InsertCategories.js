@@ -17,7 +17,8 @@ class InsertCategories extends React.Component {
     }
 
     render() {
-        
+        const state = this.state;
+        const {navigation} = this.props;
         return (
             <View style={evoBlankContainer}>
                 <Text style={evoCommonHeading}>Categorias</Text>
@@ -41,7 +42,32 @@ class InsertCategories extends React.Component {
                     dark={true}
                     theme={{ colors: { primary: colors.primary } }}
                     style={evoDefaultBtn}
-                    onPress={() => console.log("test")}>
+                    onPress={async () => {
+                        let items = [];
+                        let userToken = '';
+                        await AsyncStorage.getItem('userToken').then((value) => {
+                            userToken = value
+                        });
+                        const params = JSON.stringify({
+                            id: state.id,
+                            name: state.name,
+                            url:state.url
+                        });
+
+                        const headers = {
+                            'Content-Type': 'application/json',
+                            'Authorization': 'Bearer ' + userToken
+                        }
+
+                        let login = await axios.post('https://comandadigitalbackend.azurewebsites.net/categories', params, {
+                            headers: headers
+                        }).then(function (response) {
+                            navigation.goBack(null);
+                        }).catch(function (response) {
+                            console.log(response);
+                        })
+
+                    }}>
                     Inserir
                 </Button>
             </View>

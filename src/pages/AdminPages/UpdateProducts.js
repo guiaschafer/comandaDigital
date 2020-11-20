@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, AsyncStorage } from 'react-native';
+import { View, Text, AsyncStorage } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import colors from '../../styles/colors';
 import { evoInputDefault, evoBlankContainer, evoCommonHeading, evoDefaultBtn } from '../../styles/commonStyles';
@@ -55,6 +55,7 @@ class UpdateProducts extends React.Component {
     render() {
         const { categories } = this.state;
         const state = this.state;
+        const { navigation } = this.props;
         return (
             <View style={evoBlankContainer}>
                 <Text style={evoCommonHeading}>Produtos</Text>
@@ -126,7 +127,7 @@ class UpdateProducts extends React.Component {
                         let login = await axios.put('https://comandadigitalbackend.azurewebsites.net/products', params, {
                             headers: headers
                         }).then(function (response) {
-                            navigation.goBack(null);
+                            navigation.goBack();
                         }).catch(function (response) {
                             console.log(response);
                         })

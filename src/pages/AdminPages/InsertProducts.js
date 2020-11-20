@@ -16,16 +16,12 @@ class InsertProducts extends React.Component {
         id: 0,
         name: '',
         description: '',
-        urlImage: '',
+        urlImagem: '',
         value: 0.00,
-        idCategory: 0
+        idCategory: "1"
     }
 
     async componentDidMount() {
-        await this.getCategories();
-    }
-
-    async getCategories() {
         let userToken = '';
         await AsyncStorage.getItem('userToken').then((value) => {
             userToken = value
@@ -35,13 +31,14 @@ class InsertProducts extends React.Component {
             'Authorization': 'Bearer ' + userToken
         }
 
-        let category = await axios.post("https://comandadigitalbackend.azurewebsites.net/categories", {
+        let category = await axios.get("https://comandadigitalbackend.azurewebsites.net/categories", {
             headers: headers
         }).then(response => {
             const categories = response.data;
             this.setState({ categories });
         }).catch(error => console.log(error));
     }
+
 
     render() {
         const navigation = this.props.navigation;
@@ -69,15 +66,17 @@ class InsertProducts extends React.Component {
                 <TextInput
                     mode={'outlined'}
                     label='Url Imagem'
+                    dataDetectorTypes={'link'}
                     style={evoInputDefault}
-                    value={this.state.urlImage}
+                    value={this.state.urlImagem}
                     theme={{ colors: { primary: colors.primary } }}
-                    onChangeText={urlImage => this.setState({ urlImage })}
+                    onChangeText={urlImagem => this.setState({ urlImagem })}
                 />
                 <TextInput
                     mode={'outlined'}
                     label='Valor'
                     style={evoInputDefault}
+                    keyboardType={'decimal-pad'}
                     value={this.state.value}
                     theme={{ colors: { primary: colors.primary } }}
                     onChangeText={value => this.setState({ value })}
@@ -86,7 +85,7 @@ class InsertProducts extends React.Component {
                     // selectedValue={selectedValue}
                     style={{ height: 50, width: 150 }}
                     onValueChange={(itemValue, itemIndex) => this.setState({ idCategory: itemValue })}>
-                    {categories.map((item, index) => {
+                    {state.categories.map((item, index) => {
                         return <Picker.Item label={item.name} value={item.id} />
                     })}
                 </Picker>
@@ -114,11 +113,11 @@ class InsertProducts extends React.Component {
                             'Authorization': 'Bearer ' + userToken
                         }
 
-                        let login = await axios.post('https://comandadigitalbackend.azurewebsites.net/products', params,{
+                        let login = await axios.post('https://comandadigitalbackend.azurewebsites.net/products', params, {
                             headers: headers
-                        }).then(function (response) {       
+                        }).then(function (response) {
                             navigation.goBack(null);
-                        }).catch(function (response){
+                        }).catch(function (response) {
                             console.log(response);
                         })
 

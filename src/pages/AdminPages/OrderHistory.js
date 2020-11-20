@@ -23,7 +23,7 @@ class OrderHistory extends React.Component {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer ' + userToken
         }
-        let orders = axios.get("https://comandadigitalbackend.azurewebsites.net/ordersAll", {
+        let orders = await axios.get("https://comandadigitalbackend.azurewebsites.net/ordersAll", {
             headers: headers
         }).then(response => {
             const ordersHistory = response.data;

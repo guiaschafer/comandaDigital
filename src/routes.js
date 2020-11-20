@@ -24,6 +24,8 @@ import CategoriesScreen from './pages/AdminPages/Categories';
 import ProductsScreen from './pages/AdminPages/Products';
 import UpdateProductsScreen from './pages/AdminPages/UpdateProducts';
 import UpdateCategoriesScreen from './pages/AdminPages/UpdateCategories';
+import InsertProductsScreen from './pages/AdminPages/InsertProducts';
+import InsertCategoriesScreen from './pages/AdminPages/InsertCategories';
 
 
 import IconWithBadge from './components/IconWithBadge';
@@ -136,6 +138,18 @@ const AccountAdminStack = createStackNavigator({
       headerTitle: 'Atualizar Categoria'
     })
   },
+  InsertProducts: {
+    screen: InsertProductsScreen,
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: 'Novo Produto'
+    })
+  },
+  InsertCategories: {
+    screen: InsertCategoriesScreen,
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: 'Nova Categoria'
+    })
+  },
 }, {
   defaultNavigationOptions: ({ navigation }) => ({
     headerStyle: {
@@ -178,7 +192,7 @@ const CartStack = createStackNavigator({
 
 const OrderHistoryAdminStack = createStackNavigator({
   OrderHistory: {
-    screen: OrderHistory,
+    screen: OrderHistoryAdmin,
     navigationOptions: ({ navigation }) => ({
       headerTitle: 'Pedidos'
     })

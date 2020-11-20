@@ -16,21 +16,23 @@ class Address extends React.Component {
     }
 
     async componentDidMount() {
-        let userToken = '';
-        await AsyncStorage.getItem('userToken').then((value) => {
-            userToken = value
-        });
-        const headers = {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + userToken
-        }
+        this.navigationWillFocusListener = this.props.navigation.addListener('didFocus', async () => {
+            let userToken = '';
+            await AsyncStorage.getItem('userToken').then((value) => {
+                userToken = value
+            });
+            const headers = {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + userToken
+            }
 
-        let x = await axios.get("https://comandadigitalbackend.azurewebsites.net/products", {
-            headers: headers
-        }).then(response => {
-            const prods = response.data;
-            this.setState({ products: prods });
-        }).catch(error => console.log(error));
+            let x = await axios.get("https://comandadigitalbackend.azurewebsites.net/products", {
+                headers: headers
+            }).then(response => {
+                const prods = response.data;
+                this.setState({ products: prods });
+            }).catch(error => console.log(error));
+        })
     }
 
     render() {
@@ -76,7 +78,7 @@ class Address extends React.Component {
                     dark={true}
                     theme={{ colors: { primary: colors.success } }}
                     style={styles.newAddBtn}
-                    onPress={() => console.log("Add new address")}>
+                    onPress={() => navigation.navigate("InsertProducts")}>
                     Novo
             </Button>
             </ScrollView>

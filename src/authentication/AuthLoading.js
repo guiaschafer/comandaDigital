@@ -6,6 +6,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
+import jwt_decode from "jwt-decode";
 
 export default class AuthLoadingScreen extends React.Component {
   componentDidMount() {
@@ -16,9 +17,20 @@ export default class AuthLoadingScreen extends React.Component {
   _bootstrapAsync = async () => {
     const userToken = await AsyncStorage.getItem('userToken');
 
+    if(userToken == undefined){
+      this.props.navigation.navigate('Auth');
+    }
+
+    let decodeToken = jwt_decode(userToken);
+    console.log(decodeToken);
+    if (decodeToken.role == 4) {
+        this.props.navigation.navigate('Home');
+    }
+    else if (decodeToken.role == 0) {
+        this.props.navigation.navigate('HomeAdmin');
+    }
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
-    this.props.navigation.navigate(userToken ? 'Home' : 'Auth');
   };
 
   // Render any loading content that you like here

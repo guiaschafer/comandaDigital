@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         letterSpacing:1,
         width:'100%',
-        paddingLeft:22,
+        paddingLeft:20,
         paddingRight:22
     },
     counter: {
