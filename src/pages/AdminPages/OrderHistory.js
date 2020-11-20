@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, ScrollView, Text,AsyncStorage } from 'react-native';
+import { StyleSheet, ScrollView, Text, AsyncStorage } from 'react-native';
 import OrderCard from '../../components/OrderCard';
 import orderHistory from '../../constants/orderHistory';
 import colors from '../../styles/colors';
@@ -9,25 +9,27 @@ class OrderHistory extends React.Component {
     constructor(props) {
         super(props);
     }
-    
+
     state = {
         orders: []
     }
 
     async componentDidMount() {
-        let userToken = '';
-        await AsyncStorage.getItem('userToken').then((value) => {
-            userToken = value
-        });
-        const headers = {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + userToken
-        }
-        let orders = await axios.get("https://comandadigitalbackend.azurewebsites.net/ordersAll", {
-            headers: headers
-        }).then(response => {
-            const ordersHistory = response.data;
-            this.setState({ orders: ordersHistory });
+        this.navigationWillFocusListener = this.props.navigation.addListener('didFocus', async () => {
+            let userToken = '';
+            await AsyncStorage.getItem('userToken').then((value) => {
+                userToken = value
+            });
+            const headers = {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + userToken
+            }
+            let orders = await axios.get("https://comandadigitalbackend.azurewebsites.net/ordersAll", {
+                headers: headers
+            }).then(response => {
+                const ordersHistory = response.data;
+                this.setState({ orders: ordersHistory });
+            })
         })
     }
 

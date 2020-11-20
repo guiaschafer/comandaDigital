@@ -1,8 +1,10 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, Dimensions, ScrollView } from 'react-native';
 import { Surface, Button, Colors } from 'react-native-paper';
 import colors from './../styles/colors';
+import { Card } from 'react-native-paper';
 
+const cartWidth = Dimensions.get("window").width;
 const OrderCard = ({ navigation, orderDetail }) => {
     const { navigate } = navigation;
 
@@ -10,7 +12,7 @@ const OrderCard = ({ navigation, orderDetail }) => {
         return 'R$' + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
     }
     return (
-        <Surface style={{ ...styles.orderCardWrapper, ...styles.boxWithShadow }} onPress={() => { console.log("testing") }}>
+        <Card style={styles.orderCardWrapper} elevation={5} onPress={() => { console.log("testing") }}>
             <View style={styles.orderDescription}>
                 <View>
                     <Text style={styles.orderNum}>Pedido Nº {orderDetail.id}</Text>
@@ -21,8 +23,14 @@ const OrderCard = ({ navigation, orderDetail }) => {
                     <Text style={styles.orderAmountText}>R$ {orderDetail.valorTotal}</Text>
                 </View>
             </View>
-
-            <View>
+            {orderDetail.nameClient != null ?
+                <View style={styles.orderClient}>                    
+                        <Text key={`item-card-${orderDetail.Cpf}`} >
+                            {orderDetail.nameClient} - {orderDetail.cpfClient}
+                        </Text>                    
+                </View> : null
+            }
+            <View style={styles.orderItens}>
                 {orderDetail.itens.map((item, index) => {
                     return <Text key={`item-card-${index}`} style={styles.orderNumText} >{item.quantity}x - {item.name} - Total: {item.quantity * item.value}</Text>
                 })}
@@ -35,7 +43,7 @@ const OrderCard = ({ navigation, orderDetail }) => {
                     onPress={() => console.log("")}>
                     {orderDetail.status}
                 </Button>
-                {orderDetail.CodigoStatus !== 2 ? <Button mode="outlined"
+                {orderDetail.CodigoStatus !== 2 && orderDetail.cpfClient == null? <Button mode="outlined"
                     theme={{ colors: { primary: colors.heading } }}
                     onPress={() => navigate('CheckOut', {
                         totalAmt: formatMoney(orderDetail.valorTotal),
@@ -45,26 +53,47 @@ const OrderCard = ({ navigation, orderDetail }) => {
                     Pagar
                 </Button> : null}
             </View>
-        </Surface>
+        </Card>
+
     );
 }
 
 const styles = StyleSheet.create({
+
     orderCardWrapper: {
+        width: cartWidth - cartWidth * 0.12,
         display: 'flex',
-        flexDirection: 'column',
-        height: 195,
-        marginBottom: 20,
-        borderRadius: 5,
-        padding: 15,
-        borderColor: colors.outline,
-        borderWidth: 3,
-        fontFamily: 'OpenSans-Regular'
+        flexDirection: 'row',
+        justifyContent: 'space-evenly',
+        alignItems: 'center',
+        marginTop: 10,
+        marginLeft: 10
+        // height: 195,
+        // marginBottom: 15,
+        // borderRadius: 5,
+        // padding: 15,
+        // borderColor: colors.outline,
+        // borderWidth: 3,
+        // fontFamily: 'OpenSans-Regular'
+    },
+
+    orderClient: {
+        marginBottom: 5,
+        paddingBottom: 5,
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexDirection: 'row',
+        marginTop: 10,
+        marginLeft: 10,
     },
     orderNum: {
-        fontSize: 12,
-        fontFamily: 'OpenSans-Light',
-        marginBottom: 5
+        // fontSize: 12,
+        // fontFamily: 'OpenSans-Light',
+        marginTop: 5,
+        fontSize: 18,
+        fontFamily: 'OpenSans-Bold',
+        fontWeight: 'bold',
+        color: colors.primary
     },
     orderDescription: {
         marginBottom: 5,
@@ -72,36 +101,50 @@ const styles = StyleSheet.create({
         display: 'flex',
         justifyContent: 'space-between',
         flexDirection: 'row',
+        marginTop: 10,
+        marginLeft: 10
         // fontFamily: 'OpenSans-Regular'
+    },
+    orderItens: {
+        marginBottom: 5,
+        paddingBottom: 5,
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexDirection: 'column',
+        marginTop: 10,
+        marginLeft: 10
     },
     orderAmountText: {
         fontSize: 18,
         fontWeight: 'bold',
         color: colors.primary,
-        fontFamily: 'OpenSans-Regular'
+        fontFamily: 'OpenSans-Regular',
+        marginRight: 10
     },
     orderBtns: {
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-between',
-        marginTop: 10,
+        marginBottom: 10,
+        marginRight: 10,
+        marginLeft: 10
         // fontFamily: 'OpenSans-Regular'
     },
     orderTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
+        // fontSize: 18,
+        // fontWeight: 'bold',
         // color: colors.heading,
-        fontFamily: 'OpenSans-Regular'
+        // fontFamily: 'OpenSans-Regular'
     },
     orderSubText: {
-        fontSize: 12,
-        color: colors.outlineDefault,
-        fontFamily: 'OpenSans-Regular'
+        // fontSize: 12,
+        // color: colors.outlineDefault,
+        // fontFamily: 'OpenSans-Regular'
     },
     orderNumText: {
         fontSize: 16,
-        color: colors.subHeading,
-        fontFamily: 'OpenSans-Regular'
+        fontFamily: 'OpenSans-Regular',
+        marginRight: 10
     },
     boxWithShadow: {
         shadowColor: '#000',
@@ -110,7 +153,7 @@ const styles = StyleSheet.create({
         shadowRadius: 2,
         elevation: 1,
         borderRadius: 2,
-        fontFamily: 'OpenSans-Regular'
+        // fontFamily: 'OpenSans-Regular'
     },
 });
 

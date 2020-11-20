@@ -22,17 +22,13 @@ class LoginScreen extends React.Component {
 
     render() {
         const { navigate } = this.props.navigation;
-        let errorMessage = <br></br>;
+        const state = this.state;
 
-        if (this.state.erroMessage != '') {
-            errorMessage = <p style={styles.errorMessageAlert}>{this.state.erroMessage}</p>
 
-        }
         return (
-
             <ScrollView style={evoScrollContainer}>
 
-                {this.state.erroMessage != '' ? errorMessage : null}
+
                 <View style={evoBlankContainer}>
                     <Text style={styles.titleText}>
                         Restaurante do Pereira
@@ -55,7 +51,6 @@ class LoginScreen extends React.Component {
                         theme={{ colors: { primary: colors.primary } }}
                         onChangeText={password => this.setState({ password })}
                     />
-
                     <Button mode="contained"
                         dark={true}
                         theme={{ colors: { primary: colors.primary } }}
@@ -74,7 +69,7 @@ class LoginScreen extends React.Component {
                         Forgot Password ?
                     </Text>
 
-                    <Text style={styles.plainLbl}>Sign In With</Text>
+                    {/* <Text style={styles.plainLbl}>Sign In With</Text>
                     <View style={styles.socialMediaWrapper}>
                         <Button mode="contained"
                             dark={true}
@@ -91,15 +86,15 @@ class LoginScreen extends React.Component {
                             icon="facebook"
                             onPress={() => navigate('Register')}>
                             Facebook
-                    </Button>
-                    </View>
+                    </Button> 
+                    </View>*/}
                 </View>
             </ScrollView>
         );
     }
 
-     _signInAsync = async () => {
-
+    _signInAsync = async () => {
+        let errorMessagem = '';
         const { navigation } = this.props.navigation;
         const params = JSON.stringify({
             Username: this.state.username,
@@ -116,6 +111,8 @@ class LoginScreen extends React.Component {
         }).then(function (response) {
             AsyncStorage.setItem('userToken', response.data.token);
             logadoComSucesso = true;
+        }).catch(function (error) {
+            errorMessagem = error;
         })
 
         if (logadoComSucesso === true) {
@@ -138,7 +135,7 @@ class LoginScreen extends React.Component {
             //     ],
             //     { cancelable: false }
             //   );
-            this.setState({ errorMessage: 'error' })
+            this.setState({ erroMessage: errorMessagem })
         }
     };
 

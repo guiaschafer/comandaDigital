@@ -17,17 +17,24 @@ export default class AuthLoadingScreen extends React.Component {
   _bootstrapAsync = async () => {
     const userToken = await AsyncStorage.getItem('userToken');
 
-    if(userToken == undefined){
+    if (userToken == undefined || userToken == null) {
       this.props.navigation.navigate('Auth');
     }
-
-    let decodeToken = jwt_decode(userToken);
-    console.log(decodeToken);
-    if (decodeToken.role == 4) {
-        this.props.navigation.navigate('Home');
-    }
-    else if (decodeToken.role == 0) {
-        this.props.navigation.navigate('HomeAdmin');
+    else {
+      let decodeToken = jwt_decode(userToken);
+      console.log(decodeToken);
+      if (decodeToken.exp > (new Date().getTime() + 1) / 1000) {
+        if (decodeToken.role == 4) {
+          this.props.navigation.navigate('Home');
+        }
+        else if (decodeToken.role == 0) {
+          this.props.navigation.navigate('HomeAdmin');
+        }
+      }
+      else{
+        await AsyncStorage.clear();
+        this.props.navigation.navigate('Auth');
+      }
     }
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
