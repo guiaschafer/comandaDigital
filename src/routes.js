@@ -27,6 +27,13 @@ import UpdateCategoriesScreen from './pages/AdminPages/UpdateCategories';
 import InsertProductsScreen from './pages/AdminPages/InsertProducts';
 import InsertCategoriesScreen from './pages/AdminPages/InsertCategories';
 
+import HomeKitchenScreen from './pages/KitchenPages/Main';
+import AccountKitchenScreen from './pages/KitchenPages/Account';
+
+
+import HomeBarBartenderScreen from './pages/BarBartenderPages/Main';
+import AccountBarBartenderScreen from './pages/BarBartenderPages/Account';
+
 
 import IconWithBadge from './components/IconWithBadge';
 import colors from './styles/colors';
@@ -84,6 +91,23 @@ const HomeAdminStack = createStackNavigator({
   },
 });
 
+const HomeKitchenStack = createStackNavigator({
+  HomeKitchen: {
+    screen: HomeKitchenScreen,
+    navigationOptions: ({ navigation }) => ({
+      headerShown: false
+    }),
+  },
+});
+
+const HomeBarBartenderStack = createStackNavigator({
+  HomeBarBartender: {
+    screen: HomeBarBartenderScreen,
+    navigationOptions: ({ navigation }) => ({
+      headerShown: false
+    }),
+  },
+});
 
 const AccountStack = createStackNavigator({
   Account: {
@@ -105,7 +129,6 @@ const AccountStack = createStackNavigator({
     headerTintColor: 'white'
   })
 });
-
 
 const AccountAdminStack = createStackNavigator({  
   Account: {
@@ -163,6 +186,49 @@ const AccountAdminStack = createStackNavigator({
     headerTintColor: 'white'
   })
 });
+
+const AccountKitchenStack = createStackNavigator({
+  Account: {
+    screen: AccountKitchenScreen,
+    navigationOptions: ({ navigation }) => ({
+      headerShown: false
+    })
+  }
+}, {
+  defaultNavigationOptions: ({ navigation }) => ({
+    headerStyle: {
+      backgroundColor: colors.primary
+    },
+    headerTitleStyle: {
+      color: 'white',
+      fontSize: 24,
+      minWidth: 200
+    },
+    headerTintColor: 'white'
+  })
+});
+
+const AccountBarBartenderStack = createStackNavigator({
+  Account: {
+    screen: AccountBarBartenderScreen,
+    navigationOptions: ({ navigation }) => ({
+      headerShown: false
+    })
+  }
+}, {
+  defaultNavigationOptions: ({ navigation }) => ({
+    headerStyle: {
+      backgroundColor: colors.primary
+    },
+    headerTitleStyle: {
+      color: 'white',
+      fontSize: 24,
+      minWidth: 200
+    },
+    headerTintColor: 'white'
+  })
+});
+
 const CartStack = createStackNavigator({
   Cart: {
     screen: CartScreen,
@@ -196,13 +262,6 @@ const OrderHistoryAdminStack = createStackNavigator({
     navigationOptions: ({ navigation }) => ({
       headerTitle: 'Pedidos'
     })
-  },
-  CheckOut: {
-    screen: CheckOut,
-    navigationOptions: ({ navigation }) => ({
-      headerTitle: 'Pagamento'
-
-    })
   }
 }, {
   defaultNavigationOptions: ({ navigation }) => ({
@@ -223,6 +282,13 @@ const OrderHistoryStack = createStackNavigator({
     screen: OrderHistory,
     navigationOptions: ({ navigation }) => ({
       headerTitle: 'Pedidos'
+    })
+  },
+  CheckOut: {
+    screen: CheckOut,
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: 'Pagamento'
+
     })
   }
 }, {
@@ -280,7 +346,7 @@ const AdminStack = createBottomTabNavigator({
   Menu: HomeAdminStack,
   // Carrinho: CartStack,  
   Pedidos: OrderHistoryAdminStack,
-  Conta: AccountAdminStack
+  Configuração: AccountAdminStack
 }, {
   defaultNavigationOptions: ({ navigation }) => ({
     tabBarIcon: ({ focused, horizontal, tintColor }) => {
@@ -294,6 +360,74 @@ const AdminStack = createBottomTabNavigator({
       else if (routeName === 'Pedidos') {
         iconName = 'clipboard';
       }
+      // else if (routeName === 'Carrinho') {
+      //   iconName = 'shopping-basket';
+      // }
+      else if (routeName === 'Configuração') {
+        iconName = 'cog';
+      }
+
+      return <IconComponent name={iconName} size={25} color={tintColor} />;
+    },
+  }),
+  tabBarOptions: {
+    activeTintColor: colors.primary,
+    inactiveTintColor: 'gray',
+  },
+});
+
+const KitchenStack = createBottomTabNavigator({
+  Menu: HomeKitchenStack,
+  // Carrinho: CartStack,  
+  // Pedidos: OrderHistoryAdminStack,
+  Conta: AccountKitchenStack
+}, {
+  defaultNavigationOptions: ({ navigation }) => ({
+    tabBarIcon: ({ focused, horizontal, tintColor }) => {
+      const { routeName, params } = navigation.state;
+      let IconComponent = Icon;
+      let iconName;
+      if (routeName === 'Menu') {
+        iconName = 'home';
+        IconComponent = IconWithBadge;
+      }
+      // else if (routeName === 'Pedidos') {
+      //   iconName = 'clipboard';
+      // }
+      // else if (routeName === 'Carrinho') {
+      //   iconName = 'shopping-basket';
+      // }
+      else if (routeName === 'Conta') {
+        iconName = 'user';
+      }
+
+      return <IconComponent name={iconName} size={25} color={tintColor} />;
+    },
+  }),
+  tabBarOptions: {
+    activeTintColor: colors.primary,
+    inactiveTintColor: 'gray',
+  },
+});
+
+const BarBartenderStack = createBottomTabNavigator({
+  Menu: HomeBarBartenderStack,
+  // Carrinho: CartStack,  
+  // Pedidos: OrderHistoryAdminStack,
+  Conta: AccountBarBartenderStack
+}, {
+  defaultNavigationOptions: ({ navigation }) => ({
+    tabBarIcon: ({ focused, horizontal, tintColor }) => {
+      const { routeName, params } = navigation.state;
+      let IconComponent = Icon;
+      let iconName;
+      if (routeName === 'Menu') {
+        iconName = 'home';
+        IconComponent = IconWithBadge;
+      }
+      // else if (routeName === 'Pedidos') {
+      //   iconName = 'clipboard';
+      // }
       // else if (routeName === 'Carrinho') {
       //   iconName = 'shopping-basket';
       // }
@@ -311,14 +445,14 @@ const AdminStack = createBottomTabNavigator({
 });
 
 /* End - Perfil Stack */
-
-
 const RootStack = createSwitchNavigator(
   {
     AuthLoading: AuthLoadingScreen,
     Auth: AuthStack,
     HomeClient: ClientStack,
-    HomeAdmin: AdminStack
+    HomeAdmin: AdminStack,
+    HomeKitchen: KitchenStack,
+    HomeBarBartender: BarBartenderStack
   },
   {
     initialRouteName: 'AuthLoading',

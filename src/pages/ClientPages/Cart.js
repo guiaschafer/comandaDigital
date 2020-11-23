@@ -74,7 +74,7 @@ class Cart extends React.Component {
                                                         <Text style={styles.cartLbl}>{cartItem.name}</Text>
                                                         <Text style={styles.cartLbl}>x {cartItem.Quantity}</Text>
                                                     </View>
-                                                    <Text style={{ ...styles.cartLbl, ...{ height: 30 } }}>Price: {`${cartItem.value}.00`}</Text>
+                                                    <Text style={{ ...styles.cartLbl, ...{ height: 30 } }}>Valor (R$): {`${cartItem.value},00`}</Text>
                                                 </View>
                                             </Card.Content>
                                         </Card>
@@ -97,7 +97,7 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     cartItem: {
-        width: cartWidth - cartWidth * 0.12,
+        width: '98%',
         display: 'flex',
         flexDirection: 'row',
         justifyContent: 'space-evenly',
@@ -113,7 +113,8 @@ const styles = StyleSheet.create({
     },
     cartImg: {
         width: 70,
-        height: 70
+        height: 70,
+        borderRadius:10
     },
     cartDetailsWrapper: {
         display: 'flex',

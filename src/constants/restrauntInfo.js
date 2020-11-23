@@ -16,7 +16,7 @@ const restrauntInfo={
             },
             {
                 value:'R$',
-                description:"Debito/Crédito, Pagamento Online",
+                description:"Crédito, Pagamento Online",
                 imgIcon:require('../../assets/icons/payment.png')
             }
         ],

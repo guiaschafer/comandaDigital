@@ -21,14 +21,14 @@ class Account extends React.Component {
             <ScrollView style={{ ...evoScrollContainer, ...{ minHeight: 500, height: '100%' } }}>
                 <View style={styles.accHero}>
                     {/* <Image style={styles.accImg} source={require('./../assets/user1.jpg')} /> */}
-                    <Text style={styles.compStatus}>Configuração</Text>
+                    <Text style={styles.compStatus}>Conta</Text>
                     {/* <Button icon="pencil" mode="text"
                         theme={{ colors: { primary: colors.heading } }}
                         onPress={() => navigate('Profile')}>
                         Edit Profile
                 </Button> */}
                 </View>
-                <MenuList menuData={menuLista} navigation={this.props.navigation}/> 
+                {/* <MenuList menuData={menuLista} navigation={this.props.navigation}/>  */}
                 <Button style={styles.logoutBtn} icon="power" mode="outlined"
                     theme={{ colors: { primary: colors.primary } }}
                     onPress={async () => {

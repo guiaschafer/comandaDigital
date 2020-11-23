@@ -119,11 +119,18 @@ class LoginScreen extends React.Component {
             let userToken = await AsyncStorage.getItem('userToken');
             let decodeToken = jwt_decode(userToken);
             console.log(decodeToken);
-            if (decodeToken.role == 4) {
-                this.props.navigation.navigate('Home');
-            }
-            else if (decodeToken.role == 0) {
+
+            if (decodeToken.role == 0) {
                 this.props.navigation.navigate('HomeAdmin');
+            }
+            else if (decodeToken.role == 1) {
+                this.props.navigation.navigate('HomeKitchen');
+            }
+            else if (decodeToken.role == 2) {
+                this.props.navigation.navigate('HomeBarBartender');
+            }
+            else if (decodeToken.role == 4) {
+                this.props.navigation.navigate('Home');
             }
         }
         else {

@@ -21,7 +21,7 @@ const CartTotal = ({ navigation, subtotal, cWidth, cartContent }) => {
                     <Text style={{ ...styles.addressLbl, ...{ alignSelf: 'flex-start' } }}><Icon name="edit" size={22} color={colors.success} /> Edit Address</Text>
                 </View>
             </Card> */}
-            <Card style={{ ...styles.cartPaymentWrapper, ...{ width: cWidth } }} elevation={5}>
+            <Card style={{ ...styles.cartPaymentWrapper, ...{ width: "98%" } }} elevation={5}>
                 {/* <View style={styles.defaultLbl}>
                     <Text style={styles.paymentLbl}>Subtotal</Text>
                     <Text style={styles.paymentLbl}>R${subtotal}</Text>
@@ -113,12 +113,16 @@ const styles = StyleSheet.create({
     cartPaymentWrapper: {
         height: 220,
         padding: 20,
-        marginBottom: 50
+        marginBottom: 50,
     },
     defaultLbl: {
         display: 'flex',
         flexDirection: 'row',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        marginLeft:10,
+        marginTop:10,
+        marginRight:10,
+        marginBottom:5
     },
     paymentLbl: {
         fontFamily: 'OpenSans-Regular',
@@ -135,9 +139,12 @@ const styles = StyleSheet.create({
         marginTop: 10
     },
     proceedPay: {
-        width: '100%',
+        width: '97%',
         padding: 5,
-        marginTop: 15
+        marginTop: 5,
+        marginBottom:5,
+        marginRight:10,
+        marginLeft:10
     }
 })
 

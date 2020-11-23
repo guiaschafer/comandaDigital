@@ -14,14 +14,14 @@ class RestrauntTile extends React.Component {
             <View style={{ height: 350 }}>
                 <Image style={styles.tileImg}
                     source={require('../../assets/restraunt/res6.jpg')} />
-                <IconButton
+                {/* <IconButton
                     icon="arrow-left"
                     color={'#fff'}
                     size={35}
                     style={{ ...styles.tileIcons, ...{ left: 0 } }}
                     onPress={() => goBack()}
-                />
-                <View style={styles.tileIcons}>
+                /> */}
+                {/* <View style={styles.tileIcons}>
                     <IconButton
                         icon="heart-box"
                         color={'#fff'}
@@ -34,12 +34,12 @@ class RestrauntTile extends React.Component {
                         size={38}
                         onPress={() => console.log('Pressed')}
                     />
-                </View>
+                </View> */}
                 <Card style={styles.tileWrapper} elevation={5}>
                     <Text style={styles.tileName}>{this.props.tileData.heading}</Text>
-                    <IconButton icon="share"
+                    {/* <IconButton icon="share"
                         onPress={() => { console.log("Share Pressed") }}
-                        style={styles.tileshare} size={35} color={colors.primary} />
+                        style={styles.tileshare} size={35} color={colors.primary} /> */}
                     <Text style={styles.tileAddress}>{this.props.tileData.address}</Text>
                     <RestrauntRatingDescription descData={this.props.tileData.ratingInfo} />
                 </Card>
@@ -70,8 +70,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
     },
     tileImg: {
-        width: win.width,
-        height: 372 * ratio,
+        width: '100%',
+        height: '110%'
     },
     tileName: {
         fontFamily: 'Lobster-Regular',

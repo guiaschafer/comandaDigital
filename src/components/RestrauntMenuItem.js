@@ -16,7 +16,7 @@ class RestrauntMenuItem extends React.Component {
         products: []
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         this.navigationWillFocusListener = this.props.navigation.addListener('didFocus', async () => {
             let userToken = '';
             await AsyncStorage.getItem('userToken').then((value) => {
@@ -33,7 +33,7 @@ class RestrauntMenuItem extends React.Component {
                 const prods = response.data;
                 this.setState({ products: prods });
             }).catch(error => console.log(error));
-
+            
             AsyncStorage.getAllKeys().then(
                 response => {
                     let temp = [];
@@ -56,7 +56,8 @@ class RestrauntMenuItem extends React.Component {
                         this.setState({ currentInitialVal: temp });
                     });
                 })
-        })
+        });
+
     }
 
 
@@ -67,6 +68,7 @@ class RestrauntMenuItem extends React.Component {
 
     render() {
         const { products } = this.state;
+        const state = this.state;
         return (
             <View style={{ flex: 1 }}>
                 {/* <View style={styles.vegOnlyWrapper}>
@@ -85,9 +87,9 @@ class RestrauntMenuItem extends React.Component {
                 <View style={styles.menuItemWrapper}>
                     {
                         products.map((item, index) => {
-                            let initialVal = this.state.currentInitialVal.filter(v => v.id === item.id);
+                            let initialVal = state.currentInitialVal.filter(v => v.id === item.id);
                             return <View style={styles.menuItem} key={`restraunt-menu-item-${index}`}>
-                                <Image source={{ uri: item.urlImagem }} resizeMode='contain' style={styles.foodImg} />
+                                <Image source={{ uri: item.urlImagem }} style={styles.foodImg} />
                                 <Text style={styles.menuCategory}>{item.category}</Text>
                                 <Text style={styles.menuTitle}>{item.name}</Text>
                                 <View style={styles.menufooter}>
@@ -139,8 +141,9 @@ const styles = StyleSheet.create({
     },
     foodImg: {
         height: 140,
-        width: '100%',
+        // width: '100%',
         borderRadius: 10,
+
     },
     menuCategory: {
         fontSize: 12,
