@@ -4,13 +4,13 @@ import { Button } from 'react-native-paper';
 import { evoScrollContainer } from '../../styles/commonStyles';
 import colors from '../../styles/colors'
 
-const OrderSuccessful = () => {
+const OrderSuccessful = (params) => {
     return (
         <ScrollView style={evoScrollContainer}>
             <View style={styles.orderImgWrapper}>
                 <Image source={require('../../../assets/icons/check.png')} style={styles.orderSuccessImg} />
             </View>
-            <Text style={styles.orderPlacedTxt}>Pedido No. #43689172 </Text>
+            <Text style={styles.orderPlacedTxt}>Pedido </Text>
             <Text style={styles.orderPlacedTxt}>Realizado com sucesso! </Text>
             {/* <Button icon="directions" mode="text"
                 theme={{ colors: { primary: colors.primary } }}

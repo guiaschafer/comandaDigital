@@ -290,6 +290,12 @@ const OrderHistoryStack = createStackNavigator({
       headerTitle: 'Pagamento'
 
     })
+  },
+  OrderSucessful: {
+    screen: OrderSucessful,
+    navigationOptions: ({ navigation }) => ({
+      headerTitle: 'Pedido pago'
+    })
   }
 }, {
   defaultNavigationOptions: ({ navigation }) => ({

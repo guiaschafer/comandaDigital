@@ -33,7 +33,7 @@ class RestrauntMenuItem extends React.Component {
                 const prods = response.data;
                 this.setState({ products: prods });
             }).catch(error => console.log(error));
-            
+
             AsyncStorage.getAllKeys().then(
                 response => {
                     let temp = [];
@@ -68,6 +68,7 @@ class RestrauntMenuItem extends React.Component {
 
     render() {
         const { products } = this.state;
+        const { navigation } = this.props;
         const state = this.state;
         return (
             <View style={{ flex: 1 }}>
@@ -95,7 +96,8 @@ class RestrauntMenuItem extends React.Component {
                                 <View style={styles.menufooter}>
                                     <Text style={styles.menuPrice}>R$ {item.value}</Text>
                                     <AddButton selectedQuantity={qty => this.handleCartAdd(item, qty)}
-                                        initialQuantity={initialVal.length > 0 ? initialVal[0].qty : 0} />
+                                        initialQuantity={initialVal.length > 0 ? initialVal[0].qty : 0}
+                                        navigation={navigation} />
                                 </View>
                             </View>
                         })

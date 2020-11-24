@@ -14,6 +14,14 @@ export const evoInputDefaultHlf = {
     backgroundColor: '#fff'
 }
 
+export const evoInputDefaultHlfError = {
+    width: '45%',
+    marginTop: 10,
+    marginBottom: 10,
+    backgroundColor: '#fff',
+    color: '#ff0000'
+}
+
 export const evoContainer = {
     display: 'flex',
     justifyContent: 'center',

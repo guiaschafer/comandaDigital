@@ -6,6 +6,8 @@ import colors from './../styles/colors';
 import { evoInputDefault, evoBlankContainer, evoScrollContainer } from './../styles/commonStyles';
 import axios from 'axios';
 import jwt_decode from "jwt-decode";
+import loginValidation from '../constants/loginValidation';
+import validatejs from '../validation_wrapper';
 
 
 class LoginScreen extends React.Component {
@@ -14,9 +16,11 @@ class LoginScreen extends React.Component {
     };
 
     state = {
-        username: '',
-        password: '',
-        erroMessage: ''
+        email: null,
+        password: null,
+        emailError: '',
+        passwordError: '',
+        erroMessage : ''
     };
 
 
@@ -37,11 +41,16 @@ class LoginScreen extends React.Component {
                         mode={'outlined'}
                         label='Username'
                         style={evoInputDefault}
-                        value={this.state.username}
+                        value={this.state.email}
                         theme={{ colors: { primary: colors.primary } }}
-                        onChangeText={username => this.setState({ username })}
+                        onChangeText={email => this.setState({ email })}
+                        onBlur={() => {
+                            this.setState({
+                                emailError: validatejs('email', this.state.email, loginValidation)
+                            })
+                        }}
                     />
-
+                    {this.state.emailError != null ? <Text>{this.state.emailError}</Text> : null}
                     <TextInput
                         mode={'outlined'}
                         label='Password'
@@ -50,14 +59,21 @@ class LoginScreen extends React.Component {
                         secureTextEntry={true}
                         theme={{ colors: { primary: colors.primary } }}
                         onChangeText={password => this.setState({ password })}
+                        onBlur={() => {
+                            this.setState({
+                                passwordError: validatejs('password', this.state.password, loginValidation)
+                            })
+                        }}
                     />
+                    {this.state.passwordError != null ? <Text>{this.state.passwordError}</Text> : null}
                     <Button mode="contained"
                         dark={true}
                         theme={{ colors: { primary: colors.primary } }}
                         style={styles.loginBtn}
                         onPress={this._signInAsync}>
                         Sign In
-                    </Button>
+                    </Button>                    
+                    {this.state.erroMessage != '' ? <Text>{this.state.erroMessage}</Text> : null}
                     <Button mode="outlined"
                         theme={{ colors: { primary: colors.primary } }}
                         style={styles.loginBtn}
@@ -94,55 +110,69 @@ class LoginScreen extends React.Component {
     }
 
     _signInAsync = async () => {
-        let errorMessagem = '';
+        const usernameLogin = validatejs('email', this.state.email, loginValidation);
+        const passwordLogin = validatejs('password', this.state.password, loginValidation);
+        const state = this.state;
         const { navigation } = this.props.navigation;
-        const params = JSON.stringify({
-            Username: this.state.username,
-            Password: this.state.password
-        });
-        let logadoComSucesso = false;
 
-        let login = await axios.post('https://comandadigitalbackend.azurewebsites.net/login', params, {
-            "headers": {
-
-                "content-type": "application/json",
-
-            }
-        }).then(function (response) {
-            AsyncStorage.setItem('userToken', response.data.token);
-            logadoComSucesso = true;
-        }).catch(function (error) {
-            errorMessagem = error;
+        this.setState({
+            emailError: usernameLogin,
+            passwordError: passwordLogin
         })
 
-        if (logadoComSucesso === true) {
-            let userToken = await AsyncStorage.getItem('userToken');
-            let decodeToken = jwt_decode(userToken);
-            console.log(decodeToken);
-
-            if (decodeToken.role == 0) {
-                this.props.navigation.navigate('HomeAdmin');
-            }
-            else if (decodeToken.role == 1) {
-                this.props.navigation.navigate('HomeKitchen');
-            }
-            else if (decodeToken.role == 2) {
-                this.props.navigation.navigate('HomeBarBartender');
-            }
-            else if (decodeToken.role == 4) {
-                this.props.navigation.navigate('Home');
-            }
+        if (usernameLogin != null || passwordLogin != null) {
+            alert('Existem campos inválidos!')
         }
         else {
-            // Alert.alert(
-            //     "Error",
-            //     "Erro ao logar",
-            //     [
-            //       { text: "OK", onPress: () => console.log("OK Pressed") }
-            //     ],
-            //     { cancelable: false }
-            //   );
-            this.setState({ erroMessage: errorMessagem })
+            let errorMessagem = '';
+            const params = JSON.stringify({
+                Username: state.email,
+                Password: state.password
+            });
+            let logadoComSucesso = false;
+
+            let login = await axios.post('https://comandadigitalbackend.azurewebsites.net/login', params, {
+                "headers": {
+
+                    "content-type": "application/json",
+
+                }
+            }).then(function (response) {
+                AsyncStorage.setItem('userToken', response.data.token);
+                logadoComSucesso = true;
+            }).catch(function (error) {
+                errorMessagem = error.message;
+            })
+
+            if (logadoComSucesso === true) {
+                let userToken = await AsyncStorage.getItem('userToken');
+                let decodeToken = jwt_decode(userToken);
+                console.log(decodeToken);
+
+                if (decodeToken.role == 0) {
+                    this.props.navigation.navigate('HomeAdmin');
+                }
+                else if (decodeToken.role == 1) {
+                    this.props.navigation.navigate('HomeKitchen');
+                }
+                else if (decodeToken.role == 2) {
+                    this.props.navigation.navigate('HomeBarBartender');
+                }
+                else if (decodeToken.role == 4) {
+                    this.props.navigation.navigate('Home');
+                }
+            }
+            else {
+                // Alert.alert(
+                //     "Error",
+                //     "Erro ao logar",
+                //     [
+                //       { text: "OK", onPress: () => console.log("OK Pressed") }
+                //     ],
+                //     { cancelable: false }
+                //   );
+                this.setState({ erroMessage: errorMessagem })
+            }
         }
     };
 

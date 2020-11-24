@@ -10,6 +10,17 @@ class AddButton extends React.Component {
         quantity: this.props.initialQuantity
     }
 
+    componentDidMount() {
+        this.navigationWillFocusListener = this.props.navigation.addListener('didFocus', async () => {
+            if (this.props.initialQuantity != this.state.quantity) {
+                this.setState({
+                    mutated: false,
+                    quantity: 0
+                });
+            }
+        })
+    }
+
     componentWillReceiveProps(nextProps) {
         if (nextProps.initialQuantity != this.props.initialQuantity) {
             this.setState({
@@ -76,10 +87,10 @@ const styles = StyleSheet.create({
         fontSize: 12,
         color: colors.success,
         fontWeight: 'bold',
-        letterSpacing:1,
-        width:'100%',
-        paddingLeft:20,
-        paddingRight:22
+        letterSpacing: 1,
+        width: '100%',
+        paddingLeft: 20,
+        paddingRight: 22
     },
     counter: {
         display: 'flex',
