@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, AsyncStorage } from 'react-native';
+import { View, Text, StyleSheet, AsyncStorage, ScrollView } from 'react-native';
 import { TextInput, Button, Switch } from 'react-native-paper';
 import { evoDefaultBtn, evoInputDefault, evoInputDefaultHlf, evoInputDefaultHlfError, evoBlankContainer } from '../../styles/commonStyles';
 import colors from '../../styles/colors';
@@ -80,78 +80,79 @@ class CheckOut extends React.Component {
         const { state, navigate } = this.props.navigation;
 
         return (
-            <View style={evoBlankContainer}>
-                <Text style={styles.priceLbl}>Total Price</Text>
-                <Text style={styles.priceVal}>{state.params.totalAmt}</Text>
-                <View style={styles.cardWrapper}>
-                    <TextInput
-                        mode={'outlined'}
-                        label='Card Number'
-                        keyboardType={"number-pad"}  
-                        style={evoInputDefault}
-                        value={this.state.cardNum}
-                        theme={{ colors: { primary: colors.primary } }}
-                        onChangeText={cardNum => this.setState({ cardNum })}
-                        onBlur={() => {
-                            this.setState({
-                                cardNumError: validatejs('cardNum', this.state.cardNum, checkOutValidation)
-                            })
-                        }}
-                    />
-                    {this.state.cardNumError != '' ? <Text style={evoInputDefaultHlfError}>{this.state.cardNumError}</Text> : null}
-                    <View style={styles.inputBreak}>
+            <ScrollView>
+                <View style={evoBlankContainer}>
+                    <Text style={styles.priceLbl}>Total Price</Text>
+                    <Text style={styles.priceVal}>{state.params.totalAmt}</Text>
+                    <View style={styles.cardWrapper}>
                         <TextInput
                             mode={'outlined'}
-                            label='Valid Until'
-                            style={evoInputDefaultHlf}
-                            value={this.state.validUntil}
+                            label='Card Number'
+                            keyboardType={"number-pad"}
+                            style={evoInputDefault}
+                            value={this.state.cardNum}
                             theme={{ colors: { primary: colors.primary } }}
-                            onChangeText={validUntil => this.setState({ validUntil: validMask(validUntil) })}
+                            onChangeText={cardNum => this.setState({ cardNum })}
                             onBlur={() => {
                                 this.setState({
-                                    validUntilError: validatejs('validUntil', this.state.validUntil, checkOutValidation)
+                                    cardNumError: validatejs('cardNum', this.state.cardNum, checkOutValidation)
                                 })
                             }}
                         />
-
-
-                        <TextInput
-                            mode={'outlined'}
-                            label='CVV'
-                            style={evoInputDefaultHlf}
-                            value={this.state.cvv}
-                            theme={{ colors: { primary: colors.primary } }}
-                            onChangeText={cvv => this.setState({ cvv : validMaskCvv(cvv)})}
-                            keyboardType={"number-pad"}                            
-                            onBlur={() => {
-                                this.setState({
-                                    cvvError: validatejs('cvv', this.state.cvv, checkOutValidation)
-                                })
-                            }}
-                        />
-                    </View>
-                    {this.state.validUntilError != '' || this.state.cvvError != '' ?
+                        {this.state.cardNumError != '' ? <Text style={evoInputDefaultHlfError}>{this.state.cardNumError}</Text> : null}
                         <View style={styles.inputBreak}>
-                            <Text style={evoInputDefaultHlfError}>{this.state.validUntilError}</Text>
+                            <TextInput
+                                mode={'outlined'}
+                                label='Valid Until'
+                                style={evoInputDefaultHlf}
+                                value={this.state.validUntil}
+                                theme={{ colors: { primary: colors.primary } }}
+                                onChangeText={validUntil => this.setState({ validUntil: validMask(validUntil) })}
+                                onBlur={() => {
+                                    this.setState({
+                                        validUntilError: validatejs('validUntil', this.state.validUntil, checkOutValidation)
+                                    })
+                                }}
+                            />
 
-                            <Text style={evoInputDefaultHlfError}>{this.state.cvvError}</Text>
-                        </View> : null}
-                    <TextInput
-                        mode={'outlined'}
-                        label='Card Holder'
-                        style={evoInputDefault}
-                        value={this.state.cardHolder}
-                        theme={{ colors: { primary: colors.primary } }}
-                        onChangeText={cardHolder => this.setState({ cardHolder })}
-                        onBlur={() => {
-                            this.setState({
-                                cardHolderError: validatejs('cardHolder', this.state.cardHolder, checkOutValidation)
-                            })
-                        }}
 
-                    />
-                    {this.state.cardHolderError != '' ? <Text style={evoInputDefaultHlfError}>{this.state.cardHolderError}</Text> : null}
-                    {/* <View style={{...styles.inputBreak,...{marginBottom:10,marginTop:10}}}>
+                            <TextInput
+                                mode={'outlined'}
+                                label='CVV'
+                                style={evoInputDefaultHlf}
+                                value={this.state.cvv}
+                                theme={{ colors: { primary: colors.primary } }}
+                                onChangeText={cvv => this.setState({ cvv: validMaskCvv(cvv) })}
+                                keyboardType={"number-pad"}
+                                onBlur={() => {
+                                    this.setState({
+                                        cvvError: validatejs('cvv', this.state.cvv, checkOutValidation)
+                                    })
+                                }}
+                            />
+                        </View>
+                        {this.state.validUntilError != '' || this.state.cvvError != '' ?
+                            <View style={styles.inputBreak}>
+                                <Text style={evoInputDefaultHlfError}>{this.state.validUntilError}</Text>
+
+                                <Text style={evoInputDefaultHlfError}>{this.state.cvvError}</Text>
+                            </View> : null}
+                        <TextInput
+                            mode={'outlined'}
+                            label='Card Holder'
+                            style={evoInputDefault}
+                            value={this.state.cardHolder}
+                            theme={{ colors: { primary: colors.primary } }}
+                            onChangeText={cardHolder => this.setState({ cardHolder })}
+                            onBlur={() => {
+                                this.setState({
+                                    cardHolderError: validatejs('cardHolder', this.state.cardHolder, checkOutValidation)
+                                })
+                            }}
+
+                        />
+                        {this.state.cardHolderError != '' ? <Text style={evoInputDefaultHlfError}>{this.state.cardHolderError}</Text> : null}
+                        {/* <View style={{...styles.inputBreak,...{marginBottom:10,marginTop:10}}}>
                         <Text>Save card for future payments</Text>
                         <Switch
                             value={this.state.saveCard}
@@ -163,17 +164,18 @@ class CheckOut extends React.Component {
                             }
                         />
                     </View> */}
-                </View>
-                <Button mode="contained"
-                    dark={true}
-                    theme={{ colors: { primary: colors.success } }}
-                    style={evoDefaultBtn}
-                    onPress={() => this.pagar()}>
-                    Pagar
+                    </View>
+                    <Button mode="contained"
+                        dark={true}
+                        theme={{ colors: { primary: colors.success } }}
+                        style={evoDefaultBtn}
+                        onPress={() => this.pagar()}>
+                        Pagar
                 </Button>
-                {this.state.erroRequest != null ? <Text style={evoInputDefaultHlfError}>{this.state.erroRequest}</Text> : null}
+                    {this.state.erroRequest != null ? <Text style={evoInputDefaultHlfError}>{this.state.erroRequest}</Text> : null}
 
-            </View>
+                </View>
+            </ScrollView>
         );
     }
 }
