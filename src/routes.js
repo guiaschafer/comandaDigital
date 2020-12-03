@@ -14,6 +14,7 @@ import HomeScreen from './pages/ClientPages/Home/Main';
 import AccountScreen from './pages/ClientPages/Account';
 import CartScreen from './pages/ClientPages/Cart';
 import OrderSucessful from './pages/ClientPages/OrderSuccessful';
+import OrderPaidScreen from './pages/ClientPages/OrdePaid';
 import OrderHistory from './pages/ClientPages/OrderHistory';
 import CheckOut from './pages/ClientPages/CheckOut';
 
@@ -291,8 +292,8 @@ const OrderHistoryStack = createStackNavigator({
 
     })
   },
-  OrderSucessful: {
-    screen: OrderSucessful,
+  OrderPaid: {
+    screen: OrderPaidScreen,
     navigationOptions: ({ navigation }) => ({
       headerTitle: 'Pedido pago'
     })

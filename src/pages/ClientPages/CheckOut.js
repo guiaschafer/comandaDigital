@@ -26,6 +26,7 @@ class CheckOut extends React.Component {
         const validUntilValid = validatejs('validUntil', this.state.validUntil, checkOutValidation);
         const cvvValid = validatejs('cvv', this.state.cvv, checkOutValidation);
         const cardHolderValid = validatejs('cardHolder', this.state.cardHolder, checkOutValidation);
+        const { state, navigate } = this.props.navigation;
 
         this.setState({
             cardNumError: cardNumValid,
@@ -64,7 +65,7 @@ class CheckOut extends React.Component {
                 headers: headers
             }).then(function (response) {
 
-                navigate('OrderSucessful')
+                navigate('OrderPaid')
             }).catch(function (response) {
                 errorMessage = response.message;
             })
