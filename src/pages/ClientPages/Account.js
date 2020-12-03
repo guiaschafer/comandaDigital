@@ -16,12 +16,12 @@ class Account extends React.Component {
             <ScrollView style={{ ...evoScrollContainer, ...{ minHeight: 500, height: '100%' } }}>
                 <View style={styles.accHero}>
                     {/* <Image style={styles.accImg} source={require('./../assets/user1.jpg')} /> */}
-                    <Text style={styles.compStatus}>Your profile is 80% completed.</Text>
-                    <Button icon="pencil" mode="text"
+                    <Text style={styles.compStatus}>Conta</Text>
+                    {/* <Button icon="pencil" mode="text"
                         theme={{ colors: { primary: colors.heading } }}
                         onPress={() => navigate('Profile')}>
                         Edit Profile
-                </Button>
+                </Button> */}
                 </View>
                 {/* <MenuList menuData={menuList} navigation={props.navigation} /> */}
                 <Button style={styles.logoutBtn} icon="power" mode="outlined"
