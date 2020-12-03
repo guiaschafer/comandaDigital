@@ -15,28 +15,36 @@ class OrderHistory extends React.Component {
         orders: []
     }
 
-    async componentDidMount() {
-        this.navigationWillFocusListener = setInterval(async () => {
-            let userToken = '';
-            await AsyncStorage.getItem('userToken').then((value) => {
-                userToken = value
-            });
-            const headers = {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + userToken
-            }
-            let orders = await axios.get("https://comandadigitalbackend.azurewebsites.net/ordersKitchen", {
-                headers: headers
-            }).then(response => {
-                const ordersHistory = response.data;
-                this.setState({ orders: ordersHistory });
-            },2000)
-        })
+    getOrders = async () => {
+        let userToken = '';
+       
+        await AsyncStorage.getItem('userToken').then((value) => {
+            userToken = value
+        });
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + userToken
+        }
+        let orders = await axios.get("https://comandadigitalbackend.azurewebsites.net/ordersKitchen", {
+            headers: headers
+        }).then(response => {
+            let ordersHistory = response.data;
+            this.setState({ orders: ordersHistory });
+        });
+
+       
     }
 
+    componentDidMount() {
+        this.getOrders();
+
+        this.intervalo = setInterval(this.getOrders, 1000);
+    }
+
+
     componentWillUnmount() {
-        clearInterval(this.navigationWillFocusListener);
-      }
+        clearInterval(this.intervalo);
+    }
 
     async updateStatusOrder(orderDetail) {
         let userToken = '';

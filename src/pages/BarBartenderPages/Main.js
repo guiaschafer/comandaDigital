@@ -14,28 +14,32 @@ class OrderHistory extends React.Component {
     state = {
         orders: []
     }
+    
+    getOrders = async () => {
+        let userToken = '';
+        await AsyncStorage.getItem('userToken').then((value) => {
+            userToken = value
+        });
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + userToken
+        }
+        let orders = await axios.get("https://comandadigitalbackend.azurewebsites.net/ordersBarBartender", {
+            headers: headers
+        }).then(response => {
+            const ordersHistory = response.data;
+            this.setState({ orders: ordersHistory });
+        })
+    }
 
     async componentDidMount() {
-        this.navigationWillFocusListener = setInterval(async () => {
-            let userToken = '';
-            await AsyncStorage.getItem('userToken').then((value) => {
-                userToken = value
-            });
-            const headers = {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + userToken
-            }
-            let orders = await axios.get("https://comandadigitalbackend.azurewebsites.net/ordersBarBartender", {
-                headers: headers
-            }).then(response => {
-                const ordersHistory = response.data;
-                this.setState({ orders: ordersHistory });
-            })
-        }, 2000);
+        this.getOrders();
+
+        this.timer = setInterval(this.getOrders, 1000);
     }
 
     componentWillUnmount() {
-        clearInterval(this.navigationWillFocusListener);
+        clearInterval(this.timer);
     }
 
     async updateStatusOrder(orderDetail) {
