@@ -31,7 +31,7 @@ class OrderHistory extends React.Component {
                 const ordersHistory = response.data;
                 this.setState({ orders: ordersHistory });
             })
-        }, 1000);
+        }, 2000);
     }
 
     componentWillUnmount() {

@@ -30,7 +30,7 @@ class OrderHistory extends React.Component {
             }).then(response => {
                 const ordersHistory = response.data;
                 this.setState({ orders: ordersHistory });
-            },1000)
+            },2000)
         })
     }
 

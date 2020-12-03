@@ -33,7 +33,7 @@ export const evoContainer = {
 export const evoBlankContainer = {
     ...evoContainer,
     backgroundColor: 'white',
-    padding: 25
+    padding: 25,
 }
 
 export const evoScrollContainer = {
