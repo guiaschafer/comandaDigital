@@ -3,7 +3,7 @@ import React from 'react';
 import { ScrollView, View, Text, StyleSheet, AsyncStorage, Alert } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import colors from './../styles/colors';
-import { evoInputDefault, evoBlankContainer, evoScrollContainer } from './../styles/commonStyles';
+import { evoInputDefault, evoBlankContainer, evoScrollContainer, errorMessage } from './../styles/commonStyles';
 import axios from 'axios';
 import jwt_decode from "jwt-decode";
 import loginValidation from '../constants/loginValidation';
@@ -18,9 +18,9 @@ class LoginScreen extends React.Component {
     state = {
         email: null,
         password: null,
-        emailError: '',
-        passwordError: '',
-        erroMessage : ''
+        emailError: null,
+        passwordError: null,
+        erroMessage : null
     };
 
 
@@ -46,11 +46,11 @@ class LoginScreen extends React.Component {
                         onChangeText={email => this.setState({ email })}
                         onBlur={() => {
                             this.setState({
-                                emailError: validatejs('email', this.state.email, loginValidation)
+                                emailError: validatejs(['email'], [this.state.email], loginValidation)
                             })
                         }}
                     />
-                    {this.state.emailError != null ? <Text>{this.state.emailError}</Text> : null}
+                    {this.state.emailError != null ? <Text style={errorMessage}>{this.state.emailError}</Text> : null}
                     <TextInput
                         mode={'outlined'}
                         label='Password'
@@ -61,11 +61,11 @@ class LoginScreen extends React.Component {
                         onChangeText={password => this.setState({ password })}
                         onBlur={() => {
                             this.setState({
-                                passwordError: validatejs('password', this.state.password, loginValidation)
+                                passwordError: validatejs(['password'], [this.state.password], loginValidation)
                             })
                         }}
                     />
-                    {this.state.passwordError != null ? <Text>{this.state.passwordError}</Text> : null}
+                    {this.state.passwordError != null ? <Text style={errorMessage}>{this.state.passwordError}</Text> : null}
                     <Button mode="contained"
                         dark={true}
                         theme={{ colors: { primary: colors.primary } }}
@@ -73,7 +73,7 @@ class LoginScreen extends React.Component {
                         onPress={this._signInAsync}>
                         Sign In
                     </Button>                    
-                    {this.state.erroMessage != '' ? <Text>{this.state.erroMessage}</Text> : null}
+                    {this.state.erroMessage != '' ? <Text style={errorMessage}>{this.state.erroMessage}</Text> : null}
                     <Button mode="outlined"
                         theme={{ colors: { primary: colors.primary } }}
                         style={styles.loginBtn}
@@ -110,8 +110,8 @@ class LoginScreen extends React.Component {
     }
 
     _signInAsync = async () => {
-        const usernameLogin = validatejs('email', this.state.email, loginValidation);
-        const passwordLogin = validatejs('password', this.state.password, loginValidation);
+        const usernameLogin = validatejs(['email'], [this.state.email], loginValidation);
+        const passwordLogin = validatejs(['password'], [this.state.password], loginValidation);
         const state = this.state;
         const { navigation } = this.props.navigation;
 
@@ -121,7 +121,7 @@ class LoginScreen extends React.Component {
         })
 
         if (usernameLogin != null || passwordLogin != null) {
-            alert('Existem campos inválidos!')
+            this.setState({ erroMessage: 'Existem campos inválidos!' })
         }
         else {
             let errorMessagem = '';

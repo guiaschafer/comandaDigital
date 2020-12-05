@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 // import Logo from './../components/Logo';
-import { evoInputDefault, evoBlankContainer } from './../styles/commonStyles';
+import { evoInputDefault, evoBlankContainer,errorMessage } from './../styles/commonStyles';
 import colors from '../styles/colors';
 import axios from 'axios';
 import registerValidation from '../constants/registerValidation';
@@ -12,20 +12,20 @@ export default class Register extends React.Component {
 
     state = {
         name: null,
-        nameError: '',
+        nameError: null,
         lastName: null,
-        lastNameError: '',
+        lastNameError: null,
         email: null,
-        emailError: '',
+        emailError: null,
         cpf: null,
-        cpfError: '',
+        cpfError: null,
         cellphone: null,
-        cellphoneError: '',
+        cellphoneError: null,
         password: null,
-        passwordError: '',
+        passwordError: null,
         confirmPwd: null,
-        confirmPwdError: '',
-        errorRequest: ''
+        confirmPwdError: null,
+        errorRequest: null
     };
 
     render() {
@@ -44,11 +44,11 @@ export default class Register extends React.Component {
                     onChangeText={name => this.setState({ name })}
                     onBlur={() => {
                         this.setState({
-                            nameError: validatejs('name', this.state.name, registerValidation)
+                            nameError: validatejs(['name'], [this.state.name], registerValidation)
                         })
                     }}
                 />
-                {this.state.nameError != null ? <Text>{this.state.nameError}</Text> : null}
+                {this.state.nameError != null ? <Text style={errorMessage}>{this.state.nameError}</Text> : null}
                 <TextInput
                     mode={'outlined'}
                     label='Sobrenome'
@@ -58,11 +58,11 @@ export default class Register extends React.Component {
                     onChangeText={lastName => this.setState({ lastName })}
                     onBlur={() => {
                         this.setState({
-                            lastNameError: validatejs('lastName', this.state.lastName, registerValidation)
+                            lastNameError: validatejs(['lastName'], [this.state.lastName], registerValidation)
                         })
                     }}
                 />
-                {this.state.lastNameError != null ? <Text>{this.state.lastNameError}</Text> : null}
+                {this.state.lastNameError != null ? <Text style={errorMessage}>{this.state.lastNameError}</Text> : null}
                 <TextInput
                     mode={'outlined'}
                     label='Email'
@@ -72,11 +72,11 @@ export default class Register extends React.Component {
                     onChangeText={email => this.setState({ email })}
                     onBlur={() => {
                         this.setState({
-                            emailError: validatejs('email', this.state.email, registerValidation)
+                            emailError: validatejs(['email'], [this.state.email], registerValidation)
                         })
                     }}
                 />
-                {this.state.emailError != null ? <Text>{this.state.emailError}</Text> : null}
+                {this.state.emailError != null ? <Text style={errorMessage}>{this.state.emailError}</Text> : null}
                 <TextInput
                     mode={'outlined'}
                     label='CPF'
@@ -86,11 +86,11 @@ export default class Register extends React.Component {
                     onChangeText={cpf => this.setState({ cpf: cpfMask(cpf) })}
                     onBlur={() => {
                         this.setState({
-                            cpfError: validatejs('cpf', this.state.cpf, registerValidation)
+                            cpfError: validatejs(['cpf'], [this.state.cpf], registerValidation)
                         })
                     }}
                 />
-                {this.state.cpfError != null ? <Text>{this.state.cpfError}</Text> : null}
+                {this.state.cpfError != null ? <Text style={errorMessage}>{this.state.cpfError}</Text> : null}
                 <TextInput
                     mode={'outlined'}
                     label='Celular'
@@ -100,11 +100,11 @@ export default class Register extends React.Component {
                     onChangeText={cellphone => this.setState({ cellphone })}
                     onBlur={() => {
                         this.setState({
-                            cellphoneError: validatejs('cellphone', this.state.cellphone, registerValidation)
+                            cellphoneError: validatejs(['cellphone'], [this.state.cellphone], registerValidation)
                         })
                     }}
                 />
-                {this.state.cellphoneError != null ? <Text>{this.state.cellphoneError}</Text> : null}
+                {this.state.cellphoneError != null ? <Text style={errorMessage}>{this.state.cellphoneError}</Text> : null}
                 <TextInput
                     mode={'outlined'}
                     label='Password'
@@ -115,11 +115,11 @@ export default class Register extends React.Component {
                     onChangeText={pwd => this.setState({ password: pwd })}
                     onBlur={() => {
                         this.setState({
-                            password: validatejs('password', this.state.password, registerValidation)
+                            passwordError: validatejs(['password'], [this.state.password], registerValidation)
                         })
                     }}
                 />
-                {this.state.passwordError != null ? <Text>{this.state.passwordError}</Text> : null}
+                {this.state.passwordError != null ? <Text style={errorMessage}>{this.state.passwordError}</Text> : null}
                 <TextInput
                     mode={'outlined'}
                     label='Confirm Password'
@@ -130,11 +130,11 @@ export default class Register extends React.Component {
                     onChangeText={confirmPwd => this.setState({ confirmPwd })}
                     onBlur={() => {
                         this.setState({
-                            confirmPwdError: validatejs('confirmPwd', this.state.confirmPwd, registerValidation)
+                            confirmPwdError: validatejs(['confirmPwd','password'], [this.state.confirmPwd, this.state.password], registerValidation)
                         })
                     }}
                 />
-                {this.state.confirmPwdError != null ? <Text>{this.state.confirmPwdError}</Text> : null}
+                {this.state.confirmPwdError != null ? <Text style={errorMessage}>{this.state.confirmPwdError}</Text> : null}
                 <Button mode="contained"
                     dark={true}
                     theme={{ colors: { primary: colors.primary } }}
@@ -142,19 +142,21 @@ export default class Register extends React.Component {
                     onPress={this._signUpAsync}>
                     Register
                 </Button>
-                {this.state.errorRequest != null ? <Text>{this.state.errorRequest}</Text> : null}
+                {this.state.errorRequest != null ? <Text style={errorMessage}>{this.state.errorRequest}</Text> : null}
             </View>
         )
     }
 
     _signUpAsync = async () => {
-        const nameValid = validatejs('name', this.state.name, registerValidation);
-        const lastNameValid = validatejs('lastName', this.state.lastName, registerValidation);
-        const emailValid = validatejs('email', this.state.email, registerValidation);
-        const cpfValid = validatejs('cpf', this.state.cpf, registerValidation);
-        const cellphoneValid = validatejs('cellphone', this.state.cellphone, registerValidation);
-        const passwordValid = validatejs('password', this.state.password, registerValidation);
-        const confirmPwdValid = validatejs('confirmPwd', this.state.confirmPwd, registerValidation);
+        let confirmarSenha = [this.state.password, this.state.confirmPwd];
+
+        const nameValid = validatejs(['name'], [this.state.name], registerValidation);
+        const lastNameValid = validatejs(['lastName'], [this.state.lastName], registerValidation);
+        const emailValid = validatejs(['email'], [this.state.email], registerValidation);
+        const cpfValid = validatejs(['cpf'], [this.state.cpf], registerValidation);
+        const cellphoneValid = validatejs(['cellphone'], [this.state.cellphone], registerValidation);
+        const passwordValid = validatejs(['password'], [this.state.password], registerValidation);
+        const confirmPwdValid = validatejs(['confirmPwd','password'], [this.state.confirmPwd,this.state.password], registerValidation);
 
         this.setState({
             nameError: nameValid,
@@ -166,14 +168,14 @@ export default class Register extends React.Component {
             confirmPwdError: confirmPwdValid
         });
 
-        if (nameValid != '' ||
-            lastNameValid != '' ||
-            emailValid != '' ||
-            cpfValid != '' ||
-            cellphoneValid != '' ||
-            passwordValid != '' ||
-            confirmPwdValid != '') {
-            alert('Existem campos inválidos!')
+        if (nameValid != null ||
+            lastNameValid != null ||
+            emailValid != null ||
+            cpfValid != null ||
+            cellphoneValid != null ||
+            passwordValid != null ||
+            confirmPwdValid != null) {
+                this.setState({ errorRequest: 'Existem campos inválidos!' })
         }
 
         else {

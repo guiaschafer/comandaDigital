@@ -22,6 +22,14 @@ export const evoInputDefaultHlfError = {
     color: '#ff0000'
 }
 
+
+export const errorMessage = {  
+    marginTop: 10,
+    marginBottom: 10,
+    backgroundColor: '#fff',
+    color: '#ff0000'
+}
+
 export const evoContainer = {
     display: 'flex',
     justifyContent: 'center',
