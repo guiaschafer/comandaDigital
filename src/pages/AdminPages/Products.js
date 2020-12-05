@@ -63,12 +63,12 @@ class Address extends React.Component {
                                         }}>
                                         Editar
                             </Button>
-                                    <Button mode="text"
+                                    {/* <Button mode="text"
                                         dark={true}
                                         theme={{ colors: { primary: colors.primary } }}
                                         onPress={() => console.log("Del Address")}>
                                         Deletar
-                            </Button>
+                            </Button> */}
                                 </View>
                             </Card.Content>
                         </Card>

@@ -106,7 +106,7 @@ class Main extends React.Component {
                 <ScrollView style={styles.restrauntWrapper}>
                     <RestrauntTile tileData={restrauntInfo.tileInfo} navigation={this.props.navigation} />
                     <View>
-                        <RestrauntMenuItem navigation={this.props.navigation} handleCart={(item, qty) => {
+                        <RestrauntMenuItem navigation={this.props.navigation} admin={1} handleCart={(item, qty) => {
                             this.handleCart(item, qty);
                         }} />
                     </View>

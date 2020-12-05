@@ -1,6 +1,7 @@
 const loginValidation = {
     email: {
       presence: {
+        allowEmpty: false,
         message: '^O campo username/e-mail é obrigatório'
       },
       email: {
@@ -10,6 +11,7 @@ const loginValidation = {
     
     password: {
       presence: {
+        allowEmpty: false,
         message: '^O campo senha é obrigatório'
       },
       length: {

@@ -95,9 +95,10 @@ class RestrauntMenuItem extends React.Component {
                                 <Text style={styles.menuTitle}>{item.name}</Text>
                                 <View style={styles.menufooter}>
                                     <Text style={styles.menuPrice}>R$ {item.value}</Text>
-                                    <AddButton selectedQuantity={qty => this.handleCartAdd(item, qty)}
-                                        initialQuantity={initialVal.length > 0 ? initialVal[0].qty : 0}
-                                        navigation={navigation} />
+                                    {this.props.admin != 1 ?
+                                        <AddButton selectedQuantity={qty => this.handleCartAdd(item, qty)}
+                                            initialQuantity={initialVal.length > 0 ? initialVal[0].qty : 0}
+                                            navigation={navigation} /> : null}
                                 </View>
                             </View>
                         })

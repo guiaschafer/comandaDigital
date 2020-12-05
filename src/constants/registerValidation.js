@@ -1,16 +1,19 @@
 const registerValidation = {
     name: {
         presence: {
+            allowEmpty: false,
             message: '^O campo nome é obrigatório'
         },
     },
     lastName: {
         presence: {
+            allowEmpty: false,
             message: '^O campo sobrenome é obrigatório'
         },
     },
     email: {
         presence: {
+            allowEmpty: false,
             message: '^O campo e-mail é obrigatório'
         },
         email: {
@@ -19,6 +22,7 @@ const registerValidation = {
     },
     cpf: {
         presence: {
+            allowEmpty: false,
             message: '^O campo CPF é obrigatório'
         },      
         length: {
