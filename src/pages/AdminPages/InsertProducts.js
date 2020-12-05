@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Text, AsyncStorage } from 'react-native';
 import { TextInput, Button } from 'react-native-paper';
 import colors from '../../styles/colors';
-import { evoInputDefault, evoBlankContainer, evoCommonHeading, evoDefaultBtn } from '../../styles/commonStyles';
+import { evoInputDefault, evoBlankContainer, evoCommonHeading, evoDefaultBtn, evoPickerDefault } from '../../styles/commonStyles';
 import { Picker } from '@react-native-picker/picker';
 import axios from 'axios';
 
@@ -17,7 +17,7 @@ class InsertProducts extends React.Component {
         name: '',
         description: '',
         urlImagem: '',
-        value: 0.00,
+        value: null,
         idCategory: "1"
     }
 
@@ -82,8 +82,8 @@ class InsertProducts extends React.Component {
                     onChangeText={value => this.setState({ value })}
                 />
                 <Picker
-                    // selectedValue={selectedValue}
-                    style={{ height: 50, width: 150 }}
+                    // selectedValue={selectedValue}                   
+                    style={evoPickerDefault}
                     onValueChange={(itemValue, itemIndex) => this.setState({ idCategory: itemValue })}>
                     {state.categories.map((item, index) => {
                         return <Picker.Item label={item.name} value={item.id} />

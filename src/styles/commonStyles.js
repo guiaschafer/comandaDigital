@@ -7,6 +7,14 @@ export const evoInputDefault = {
     backgroundColor: '#fff'
 }
 
+export const evoPickerDefault = {
+    width: '100%',
+    height: 56,
+    marginTop: 10,
+    marginBottom: 10,
+    backgroundColor: '#fff'
+}
+
 export const evoInputDefaultHlf = {
     width: '45%',
     marginTop: 10,
@@ -23,7 +31,7 @@ export const evoInputDefaultHlfError = {
 }
 
 
-export const errorMessage = {  
+export const errorMessage = {
     marginTop: 10,
     marginBottom: 10,
     backgroundColor: '#fff',

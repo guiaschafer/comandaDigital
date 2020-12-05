@@ -39,7 +39,7 @@ class Main extends React.Component {
     updateCartState = (totalQuantity, totalPrice, allItems) => {
         this.setState({
             addToCart: totalQuantity > 0 ? true : false,
-            qtyCard: `${totalQuantity} ${totalQuantity > 1 ? 'items' : 'item'}  |  $${totalPrice}`,
+            qtyCard: `${totalQuantity} ${totalQuantity > 1 ? 'items' : 'item'}  |  R$${totalPrice}`,
             allItems: allItems
         });
     }
@@ -118,7 +118,7 @@ class Main extends React.Component {
                         <Button mode="text" style={styles.qtyCardBtn} color="white"
                             onPress={() => {
                                 navigate('Cart')
-                            }}>View Cart</Button>
+                            }}>Ver Carrinho</Button>
                     </View> : null
                 }
             </View>

@@ -22,10 +22,10 @@ class CheckOut extends React.Component {
     }
 
     async pagar() {
-        const cardNumValid = validatejs('cardNum', this.state.cardNum, checkOutValidation);
-        const validUntilValid = validatejs('validUntil', this.state.validUntil, checkOutValidation);
-        const cvvValid = validatejs('cvv', this.state.cvv, checkOutValidation);
-        const cardHolderValid = validatejs('cardHolder', this.state.cardHolder, checkOutValidation);
+        const cardNumValid = validatejs(['cardNum'], [this.state.cardNum], checkOutValidation);
+        const validUntilValid = validatejs(['validUntil'], [this.state.validUntil], checkOutValidation);
+        const cvvValid = validatejs(['cvv'], [this.state.cvv], checkOutValidation);
+        const cardHolderValid = validatejs(['cardHolder'], [this.state.cardHolder], checkOutValidation);
         const { state, navigate } = this.props.navigation;
 
         this.setState({
@@ -95,7 +95,7 @@ class CheckOut extends React.Component {
                             onChangeText={cardNum => this.setState({ cardNum })}
                             onBlur={() => {
                                 this.setState({
-                                    cardNumError: validatejs('cardNum', this.state.cardNum, checkOutValidation)
+                                    cardNumError: validatejs(['cardNum'], [this.state.cardNum], checkOutValidation)
                                 })
                             }}
                         />
@@ -110,7 +110,7 @@ class CheckOut extends React.Component {
                                 onChangeText={validUntil => this.setState({ validUntil: validMask(validUntil) })}
                                 onBlur={() => {
                                     this.setState({
-                                        validUntilError: validatejs('validUntil', this.state.validUntil, checkOutValidation)
+                                        validUntilError: validatejs(['validUntil'], [this.state.validUntil], checkOutValidation)
                                     })
                                 }}
                             />
@@ -126,7 +126,7 @@ class CheckOut extends React.Component {
                                 keyboardType={"number-pad"}
                                 onBlur={() => {
                                     this.setState({
-                                        cvvError: validatejs('cvv', this.state.cvv, checkOutValidation)
+                                        cvvError: validatejs(['cvv'], [this.state.cvv], checkOutValidation)
                                     })
                                 }}
                             />
@@ -146,7 +146,7 @@ class CheckOut extends React.Component {
                             onChangeText={cardHolder => this.setState({ cardHolder })}
                             onBlur={() => {
                                 this.setState({
-                                    cardHolderError: validatejs('cardHolder', this.state.cardHolder, checkOutValidation)
+                                    cardHolderError: validatejs(['cardHolder'], [this.state.cardHolder], checkOutValidation)
                                 })
                             }}
 
