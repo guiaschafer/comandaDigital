@@ -39,7 +39,7 @@ class Main extends React.Component {
     updateCartState = (totalQuantity, totalPrice, allItems) => {
         this.setState({
             addToCart: totalQuantity > 0 ? true : false,
-            qtyCard: `${totalQuantity} ${totalQuantity > 1 ? 'items' : 'item'}  |  R$${totalPrice}`,
+            qtyCard: `${totalQuantity} ${totalQuantity > 1 ? 'items' : 'item'}  |  R$${(totalPrice+" ").replace(".",",")}`,
             allItems: allItems
         });
     }
@@ -53,7 +53,7 @@ class Main extends React.Component {
                 let selectedItem = JSON.parse(itemList[1]);
                 allItems.push(selectedItem);
                 if (selectedItem.Quantity > 0) {
-                    let dishPrice = Number(selectedItem.value) * selectedItem.Quantity;
+                    let dishPrice = Number(selectedItem.value.replace(",",".")) * selectedItem.Quantity;
                     totalQuantity = Number(totalQuantity) + Number(selectedItem.Quantity);
                     totalPrice = totalPrice + dishPrice;
                 } else {

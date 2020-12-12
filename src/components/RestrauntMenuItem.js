@@ -94,7 +94,7 @@ class RestrauntMenuItem extends React.Component {
                                 <Text style={styles.menuCategory}>{item.category}</Text>
                                 <Text style={styles.menuTitle}>{item.name}</Text>
                                 <View style={styles.menufooter}>
-                                    <Text style={styles.menuPrice}>R$ {item.value}</Text>
+                                    <Text style={styles.menuPrice}>R$ {item.value.replace(".",",")}</Text>
                                     {this.props.admin != 1 ?
                                         <AddButton selectedQuantity={qty => this.handleCartAdd(item, qty)}
                                             initialQuantity={initialVal.length > 0 ? initialVal[0].qty : 0}

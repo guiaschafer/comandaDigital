@@ -107,7 +107,7 @@ class InsertProducts extends React.Component {
                     keyboardType={'decimal-pad'}
                     value={this.state.value}
                     theme={{ colors: { primary: colors.primary } }}
-                    onChangeText={value => this.setState({ value })}
+                    onChangeText={value => this.setState({ value: validMaskValue(value) })}
                     onBlur={() => {
                         this.setState({
                             valueError: validatejs(['value'], [this.state.value], productsValidation)
@@ -186,3 +186,15 @@ class InsertProducts extends React.Component {
 }
 
 export default InsertProducts;
+
+export const validMaskValue = value => {
+    var v = value+"";
+    v = value.replace(/\D/g,'');
+	v = (v/100).toFixed(2) + '';
+	v = v.replace(".", ",");
+	v = v.replace(/(\d)(\d{3})(\d{3}),/g, "$1.$2.$3,");
+	v = v.replace(/(\d)(\d{3}),/g, "$1.$2,");
+	
+
+    return v;
+}

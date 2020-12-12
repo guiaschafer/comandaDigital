@@ -34,7 +34,7 @@ class UpdateProducts extends React.Component {
             name: stateA.name,
             description: stateA.description,
             urlImagem: stateA.urlImagem,
-            value: stateA.value,
+            value: validMaskValue(stateA.value),
             idCategory: stateA.idCategory
         });
 
@@ -116,7 +116,7 @@ class UpdateProducts extends React.Component {
                     style={evoInputDefault}
                     value={this.state.value}
                     theme={{ colors: { primary: colors.primary } }}
-                    onChangeText={value => this.setState({ value })}
+                    onChangeText={value => this.setState({ value: validMaskValue(value) })}
                     onBlur={() => {
                         this.setState({
                             valueError: validatejs(['value'], [this.state.value], productsValidation)
@@ -195,3 +195,26 @@ class UpdateProducts extends React.Component {
 }
 
 export default UpdateProducts;
+
+export const validMaskValue = value => {
+    var v = value + "";
+
+    if (v.indexOf(",") == -1) {
+        v = v + "00"
+    } else {
+        let numDecimal = v.substr(v.indexOf(","), v.length);
+        numDecimal = numDecimal.replace(/\D/g, '');
+        if (numDecimal.length == 1) {
+            v = v + "0";
+        }
+    }
+
+    v = v.replace(/\D/g, '');
+    v = (v / 100).toFixed(2) + '';
+    v = v.replace(".", ",");
+    v = v.replace(/(\d)(\d{3})(\d{3}),/g, "$1.$2.$3,");
+    v = v.replace(/(\d)(\d{3}),/g, "$1.$2,");
+
+
+    return v;
+}

@@ -7,6 +7,7 @@ import colors from '../styles/colors';
 import axios from 'axios';
 import registerValidation from '../constants/registerValidation';
 import validatejs from '../validation_wrapper';
+import { validMask } from '../pages/ClientPages/CheckOut';
 
 export default class Register extends React.Component {
 
@@ -97,7 +98,7 @@ export default class Register extends React.Component {
                     style={evoInputDefault}
                     value={this.state.cellphone}
                     theme={{ colors: { primary: colors.primary } }}
-                    onChangeText={cellphone => this.setState({ cellphone })}
+                    onChangeText={cellphone => this.setState({ cellphone: validCellphone(cellphone) })}
                     onBlur={() => {
                         this.setState({
                             cellphoneError: validatejs(['cellphone'], [this.state.cellphone], registerValidation)
@@ -235,4 +236,10 @@ export const cpfMask = value => {
         .replace(/(\d{3})(\d)/, '$1.$2')
         .replace(/(\d{3})(\d{1,2})/, '$1-$2')
         .replace(/(-\d{2})\d+?$/, '$1') // captura 2 numeros seguidos de um traço e não deixa ser digitado mais nada
+}
+
+export const validCellphone = value => {
+    return value
+        .replace(/\D/g, '') // substitui qualquer caracter que nao seja numero por nada        
+        .replace(/(\d{11})\d+?$/, '$1') 
 }

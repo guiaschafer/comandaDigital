@@ -9,7 +9,15 @@ const CartTotal = ({ navigation, subtotal, cWidth, cartContent }) => {
     const { navigate } = navigation;
     const cart = cartContent;
     const formatMoney = num => {
-        return 'R$' + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+        var v = num +"";
+        v = v.replace(/\D/g,'');
+        v = (v/100).toFixed(2) + '';
+        v = v.replace(".", ",");
+        v = v.replace(/(\d)(\d{3})(\d{3}),/g, "$1.$2.$3,");
+        v = v.replace(/(\d)(\d{3}),/g, "$1.$2,");
+        
+    
+        return 'R$'+ v;
     }
 
     return (
@@ -36,7 +44,7 @@ const CartTotal = ({ navigation, subtotal, cWidth, cartContent }) => {
                 </View> */}
                 <View style={styles.defaultLbl}>
                     <Text style={styles.totalLbl}>Total</Text>
-                    <Text style={styles.totalLbl}>{formatMoney(subtotal)}</Text>
+                    <Text style={styles.totalLbl}>R$ {(subtotal+"").replace(".",",")}</Text>
                 </View>
                 <Button mode="contained"
                     dark={true}

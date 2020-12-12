@@ -35,7 +35,7 @@ class Cart extends React.Component {
                             if (itemList[0] != 'userToken') {
                                 let selectedItem = JSON.parse(itemList[1]);
                                 allItems.push(selectedItem);
-                                subtotal = Number(subtotal) + (Number(selectedItem.value) * selectedItem.Quantity);
+                                subtotal = Number(subtotal) + (Number(selectedItem.value.replace(",",".")) * selectedItem.Quantity);
                             }
                         });
                         this.setState({
@@ -74,7 +74,7 @@ class Cart extends React.Component {
                                                         <Text style={styles.cartLbl}>{cartItem.name}</Text>
                                                         <Text style={styles.cartLbl}>x {cartItem.Quantity}</Text>
                                                     </View>
-                                                    <Text style={{ ...styles.cartLbl, ...{ height: 30 } }}>Valor (R$): {`${cartItem.value},00`}</Text>
+                                                    <Text style={{ ...styles.cartLbl, ...{ height: 30 } }}>Valor (R$): {`${cartItem.value}`}</Text>
                                                 </View>
                                             </Card.Content>
                                         </Card>
