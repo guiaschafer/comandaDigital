@@ -18,7 +18,15 @@ class OrderCard extends React.Component {
         const { navigate } = this.props.navigation;
         const orderDetail = this.props.orderDetail;
         const formatMoney = num => {
-            return 'R$' + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+            var v = num +"";
+            v = v.replace(/\D/g,'');
+            v = (v/100).toFixed(2) + '';
+            v = v.replace(".", ",");
+            v = v.replace(/(\d)(\d{3})(\d{3}),/g, "$1.$2.$3,");
+            v = v.replace(/(\d)(\d{3}),/g, "$1.$2,");
+            
+        
+            return 'R$'+ v;
         }
         return (
             <Card style={styles.orderCardWrapper} elevation={5} onPress={() => { console.log("testing") }}>
@@ -29,7 +37,7 @@ class OrderCard extends React.Component {
                         {/* <Text style={styles.orderSubText}>{orderDetail.area}</Text> */}
                     </View>
                     <View>
-                        <Text style={styles.orderAmountText}>R$ {orderDetail.valorTotal}</Text>
+                        <Text style={styles.orderAmountText}>R$ {(orderDetail.valorTotal+"").replace(".",",")}</Text>
                     </View>
                 </View>
                 {orderDetail.nameClient != null ?
@@ -41,7 +49,7 @@ class OrderCard extends React.Component {
                 }
                 <View style={styles.orderItens}>
                     {orderDetail.itens.map((item, index) => {
-                        return <Text key={`item-card-${index}`} style={styles.orderNumText} >{item.quantity}x - {item.name} - Total (R$): {item.quantity * item.value}</Text>
+                        return <Text key={`item-card-${index}`} style={styles.orderNumText} >{item.quantity}x - {item.name} - Total (R$): {((item.quantity * Number(item.value.replace(",",".")))+"").replace(".",",")}</Text>
                     })}
                     {/* <Text style={styles.orderSubText}>{orderDetail.time}</Text> */}
                 </View>
