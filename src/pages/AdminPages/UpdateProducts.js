@@ -34,7 +34,7 @@ class UpdateProducts extends React.Component {
             name: stateA.name,
             description: stateA.description,
             urlImagem: stateA.urlImagem,
-            value: validMaskValue(stateA.value),
+            value: validMaskValue(stateA.value.replace(".",",")),
             idCategory: stateA.idCategory
         });
 
@@ -213,7 +213,7 @@ export const validMaskValue = value => {
     v = (v / 100).toFixed(2) + '';
     v = v.replace(".", ",");
     v = v.replace(/(\d)(\d{3})(\d{3}),/g, "$1.$2.$3,");
-    v = v.replace(/(\d)(\d{3}),/g, "$1.$2,");
+  
 
 
     return v;
