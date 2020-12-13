@@ -81,9 +81,9 @@ class LoginScreen extends React.Component {
                         Sign Up
                     </Button>
 
-                    <Text style={styles.anchorText} onPress={() => navigate('ForgotPassword')}>
+                    {/* <Text style={styles.anchorText} onPress={() => navigate('ForgotPassword')}>
                         Forgot Password ?
-                    </Text>
+                    </Text> */}
 
                     {/* <Text style={styles.plainLbl}>Sign In With</Text>
                     <View style={styles.socialMediaWrapper}>

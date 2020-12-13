@@ -74,7 +74,7 @@ class Cart extends React.Component {
                                                         <Text style={styles.cartLbl}>{cartItem.name}</Text>
                                                         <Text style={styles.cartLbl}>x {cartItem.Quantity}</Text>
                                                     </View>
-                                                    <Text style={{ ...styles.cartLbl, ...{ height: 30 } }}>Valor (R$): {`${cartItem.value}`}</Text>
+                                                    <Text style={{ ...styles.cartLbl, ...{ height: 30 } }}>Valor (R$): {`${cartItem.value.replace(".",",")}`}</Text>
                                                 </View>
                                             </Card.Content>
                                         </Card>

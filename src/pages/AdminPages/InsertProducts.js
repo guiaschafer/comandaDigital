@@ -157,7 +157,7 @@ class InsertProducts extends React.Component {
                                 id: state.id,
                                 name: state.name,
                                 description: state.description,
-                                value: state.value,
+                                value: state.value.replace(",","."),
                                 urlImagem: state.urlImagem,
                                 idCategory: state.idCategory
                             });
