@@ -82,7 +82,7 @@ class CheckOut extends React.Component {
         return (
             <ScrollView>
                 <View style={evoBlankContainer}>
-                    <Text style={styles.priceLbl}>Total Price</Text>
+                    <Text style={styles.priceLbl}>Preço Total</Text>
                     <Text style={styles.priceVal}>{state.params.totalAmt}</Text>
                     <View style={styles.cardWrapper}>
                         <TextInput

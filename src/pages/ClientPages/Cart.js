@@ -35,7 +35,7 @@ class Cart extends React.Component {
                             if (itemList[0] != 'userToken') {
                                 let selectedItem = JSON.parse(itemList[1]);
                                 allItems.push(selectedItem);
-                                subtotal = Number(subtotal) + (Number(selectedItem.value.replace(",",".")) * selectedItem.Quantity);
+                                subtotal = Number((Number(subtotal) + (Number(selectedItem.value.replace(",",".")) * selectedItem.Quantity)).toFixed(2));
                             }
                         });
                         this.setState({

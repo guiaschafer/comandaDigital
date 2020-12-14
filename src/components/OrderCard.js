@@ -18,7 +18,18 @@ class OrderCard extends React.Component {
         const { navigate } = this.props.navigation;
         const orderDetail = this.props.orderDetail;
         const formatMoney = num => {
-            var v = num +"";
+            var v = num.toFixed(2) +"";
+
+            if (v.indexOf(".") == -1) {
+                v = v + "00"
+            } else {
+                let numDecimal = v.substr(v.indexOf("."), v.length);
+                numDecimal = numDecimal.replace(/\D/g, '');
+                if (numDecimal.length == 1) {
+                    v = v + "0";
+                }
+            }
+
             v = v.replace(/\D/g,'');
             v = (v/100).toFixed(2) + '';
             v = v.replace(".", ",");
@@ -37,7 +48,7 @@ class OrderCard extends React.Component {
                         {/* <Text style={styles.orderSubText}>{orderDetail.area}</Text> */}
                     </View>
                     <View>
-                        <Text style={styles.orderAmountText}>R$ {(orderDetail.valorTotal+"").replace(".",",")}</Text>
+                        <Text style={styles.orderAmountText}>R$ {Number((orderDetail.valorTotal+"")).toFixed(2).replace(".",",")}</Text>
                     </View>
                 </View>
                 {orderDetail.nameClient != null ?

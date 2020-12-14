@@ -55,7 +55,7 @@ class Main extends React.Component {
                 if (selectedItem.Quantity > 0) {
                     let dishPrice = Number(selectedItem.value.replace(",",".")) * selectedItem.Quantity;
                     totalQuantity = Number(totalQuantity) + Number(selectedItem.Quantity);
-                    totalPrice = totalPrice + dishPrice;
+                    totalPrice = Number((Number(totalPrice) + Number(dishPrice)).toFixed(2));
                 } else {
                     AsyncStorage.removeItem(`orderDetails${itemList.id}`);
                 }
